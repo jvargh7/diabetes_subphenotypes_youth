@@ -1,7 +1,7 @@
 
 source("preprocessing/tdypre04_neuro datasets.R")
 
-today_baseline <- readRDS(paste0(path_today_folder,"/today_baseline.RDS"))
+today_baseline <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_baseline.RDS"))
 
 
 
@@ -28,4 +28,4 @@ today_mnsi = bind_rows(neuro_today %>% mutate(dataset = "TODAY"),
                                                                                  x == 3 ~ "Absent",
                                                                                  TRUE ~ NA_character_)) 
 
-saveRDS(today_mnsi,paste0(path_today_folder,"/today_mnsi.RDS"))
+saveRDS(today_mnsi,paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_mnsi.RDS"))

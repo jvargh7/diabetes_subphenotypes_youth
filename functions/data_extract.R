@@ -7,7 +7,9 @@ data_extract <- function(study_name, vl_column,data_path,df_name = character()){
   }
   
   
-  vl_sheet = readxl::read_excel("C:/code/phenotypes/shared/data/Phenotypes Variable List.xlsx",
+  # vl_sheet = readxl::read_excel("C:/code/phenotypes/shared/data/Phenotypes Variable List.xlsx",
+  #                               sheet=study_name)
+  vl_sheet = readxl::read_excel("C:/Users/JGUO258/Documents/JGUO/diabetes_subphenotypes_youth/data/Phenotypes Variable List.xlsx",
                                 sheet=study_name)
   
   var_names <- vl_sheet %>% 

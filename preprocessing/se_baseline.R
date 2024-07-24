@@ -1,3 +1,4 @@
+rm(list=ls()); gc(); source(".Rprofile")
 
 source("preprocessing/sepre01_search1to3 variables.R")
 source("preprocessing/sepre02_search4 variables.R")
@@ -26,4 +27,4 @@ baseline <- search1to3 %>% mutate(wave = "SEARCH 1 TO 3") %>%
                             female == "M" ~ 0,
                             TRUE ~ NA_real_))
 
-saveRDS(baseline,paste0(path_search_folder,"/search_baseline.RDS"))
+saveRDS(baseline,paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_baseline.RDS"))

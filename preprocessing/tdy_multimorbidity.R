@@ -1,5 +1,5 @@
 
-today_baseline <- readRDS(paste0(path_today_folder,"/today_baseline.RDS"))
+today_baseline <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_baseline.RDS"))
 source("preprocessing/tdypre02_run dataset.R")
 source("preprocessing/tdypre03_mvisit datasets.R")
 source("preprocessing/tdypre05_pe datasets.R")
@@ -26,4 +26,4 @@ today_multimorbidity = bind_rows(pe_today %>% mutate(dataset = "TODAY"),
                 htndrug, lipiddrug, steroiddrug, weightlossdrug,
                 hba1c:tgl
                 )
-saveRDS(today_multimorbidity,paste0(path_today_folder,"/today_multimorbidity.RDS"))
+saveRDS(today_multimorbidity,paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_multimorbidity.RDS"))

@@ -1,6 +1,8 @@
-vl_column = "SEARCH"
 
-data_path <-  "C:/Cloud/OneDrive - Emory University/Proposals/ADA Youth Phenotypes/working/search/SEARCH_V1/Data/SEARCH 1-3"
+vl_column = "SEARCH"
+study_name = "SEARCH"
+
+data_path <- paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/SEARCH_V1/Data/SEARCH 1-3")
 
 search1to3 <- data_extract(study_name,vl_column,data_path)  %>% 
   mutate(race2 = case_when(race %in% c("black","white") ~ race,

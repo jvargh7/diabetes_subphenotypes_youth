@@ -1,8 +1,8 @@
 vl_pe1 = "PE"
 vl_pe2 = "PEMD"
 
-data_path1 <-  "C:/Cloud/OneDrive - Emory University/Proposals/ADA Youth Phenotypes/working/today/Data/sas7bdat"
-data_path2 <-  "C:/Cloud/OneDrive - Emory University/Proposals/ADA Youth Phenotypes/working/today2/Data"
+data_path1 <- paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/Data/sas7bdat")
+data_path2 <- paste0(path_diabetes_subphenotypes_youth_folder,"/working/today2/Data")
 
 pe_today <- data_extract(study_name,vl_pe1,data_path1)  %>% 
   mutate_at(vars(heent,thyroid,lungs,heart),~case_when(. %in% c(1,2) ~ .-1,

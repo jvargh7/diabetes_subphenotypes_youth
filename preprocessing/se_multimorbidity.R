@@ -1,9 +1,10 @@
+rm(list=ls()); gc(); source(".Rprofile")
 
 source("preprocessing/sepre01_search1to3 variables.R")
 source("preprocessing/sepre02_search4 variables.R")
 
 
-baseline <- readRDS(paste0(path_search_folder,"/search_baseline.RDS"))
+baseline <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_baseline.RDS"))
 
 search_multimorbidity <- bind_rows(search1to3 %>% mutate(dataset = "SEARCH 1 TO 3"),
                          search4 %>% mutate(dataset = "SEARCH 4")) %>% 
@@ -32,4 +33,4 @@ search_multimorbidity <- bind_rows(search1to3 %>% mutate(dataset = "SEARCH 1 TO 
                                    TRUE ~ highchol_diag)) %>% 
   dplyr::select(-hypertension,-htndrug,-lipiddrug,-insulin) 
 
-saveRDS(search_multimorbidity,paste0(path_search_folder,"/search_multimorbidity.RDS"))
+saveRDS(search_multimorbidity,paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_multimorbidity.RDS"))

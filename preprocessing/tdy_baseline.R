@@ -1,3 +1,4 @@
+rm(list=ls()); gc(); source(".Rprofile")
 
 source("preprocessing/tdypre01_baseline datasets.R")
 source("preprocessing/tdypre02_run dataset.R")
@@ -12,4 +13,4 @@ today_baseline <- baseline %>%
             by = "study_id")
 
 
-saveRDS(today_baseline,paste0(path_today_folder,"/today_baseline.RDS"))
+saveRDS(today_baseline,paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_baseline.RDS"))

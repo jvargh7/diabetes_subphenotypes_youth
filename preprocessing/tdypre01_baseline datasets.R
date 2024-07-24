@@ -1,10 +1,12 @@
+
 vl_column1 = "BASELINE"
 vl_column2 = "PAT"
 vl_column3 = "PRIMOUT"
 
+study_name = "TODAY"
 
 
-data_path <-  "C:/Cloud/OneDrive - Emory University/Proposals/ADA Youth Phenotypes/working/today/Data/sas7bdat"
+data_path <- paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/Data/sas7bdat")
 
 baseline <- data_extract(study_name,vl_column1,data_path) 
 pat <- data_extract(study_name,vl_column2,data_path) 

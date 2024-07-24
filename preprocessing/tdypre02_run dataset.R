@@ -1,6 +1,8 @@
-vl_column3 = "RUN"
 
-data_path <-  "C:/Cloud/OneDrive - Emory University/Proposals/ADA Youth Phenotypes/working/today/Data/sas7bdat"
+vl_column3 = "RUN"
+study_name = "TODAY"
+
+data_path <- paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/Data/sas7bdat")
 
 run_today <- data_extract(study_name,vl_column3,data_path)  %>% 
   mutate(bmi = case_when(bmi == 1 ~ 32.000,

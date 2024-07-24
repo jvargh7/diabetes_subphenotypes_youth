@@ -1,9 +1,10 @@
+rm(list=ls()); gc(); source(".Rprofile")
 
 source("preprocessing/sepre01_search1to3 variables.R")
 source("preprocessing/sepre02_search4 variables.R")
 
 
-baseline <- readRDS(paste0(path_search_folder,"/search_baseline.RDS"))
+baseline <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_baseline.RDS"))
 
 search_mnsi <- bind_rows(search1to3 %>% mutate(wave = "SEARCH 1 TO 3"),
                          search4 %>% mutate(wave = "SEARCH 4")) %>% 
@@ -27,4 +28,4 @@ search_mnsi <- bind_rows(search1to3 %>% mutate(wave = "SEARCH 1 TO 3"),
                                                                         x == 3 ~ "Absent",
                                                                         TRUE ~ NA_character_)) 
 
-saveRDS(search_mnsi,paste0(path_search_folder,"/search_mnsi.RDS"))
+saveRDS(search_mnsi,paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_mnsi.RDS"))
