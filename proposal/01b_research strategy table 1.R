@@ -2,13 +2,13 @@ source("code/Rprofile_run.R")
 
 # Table for Youth Phenotypes proposal using SEARCH and TODAY
 
-search <- readRDS(paste0(path_youth_folder,"/working/search/baseline.RDS"))  %>% 
+search <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_baseline.RDS"))  %>% 
   mutate(study = "SEARCH") %>% 
   dplyr::filter(age >= 10,age<20) %>% 
   dplyr::filter(dmduration >= 0 & dmduration <= duration_cutoff) %>% 
   mutate(study_id = as.character(study_id))
 
-today <- readRDS(paste0(path_youth_folder,"/working/today/baseline.RDS"))  %>% 
+today <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_baseline.RDS"))  %>% 
   mutate(study = "TODAY") %>% 
   dplyr::filter(dmduration == "<=5 months")
 

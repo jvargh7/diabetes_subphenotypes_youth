@@ -22,9 +22,6 @@ baseline <- search1to3 %>% mutate(wave = "SEARCH 1 TO 3") %>%
   dplyr::filter(age == min(age)) %>% 
   dplyr::filter(!is.na(bmi)) %>% 
   ungroup() %>% 
-  mutate(dmduration = dmduration/12,
-         female = case_when(female == "F" ~ 1,
-                            female == "M" ~ 0,
-                            TRUE ~ NA_real_))
+  mutate(dmduration = dmduration/12)
 
 saveRDS(baseline,paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_baseline.RDS"))
