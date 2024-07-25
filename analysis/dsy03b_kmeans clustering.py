@@ -48,7 +48,7 @@ data_scaled.head()
 var = ["bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc"]
 cluster_var = data_scaled[var]
 
-kmeans = KMeans(init="random", n_clusters=5, n_init=10, max_iter=300, random_state=57)
+kmeans = KMeans(init="random", n_clusters=3, n_init=10, max_iter=300, random_state=57)
 kmeans.fit(cluster_var)
 
 # summarize the cluster labels to the original dataset
