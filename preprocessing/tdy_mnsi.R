@@ -4,9 +4,6 @@ source("preprocessing/tdypre04_neuro datasets.R")
 today_baseline <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_baseline.RDS"))
 
 
-
-
-
 today_mnsi = bind_rows(neuro_today %>% mutate(dataset = "TODAY"),
                   neuro_today2 %>% mutate(dataset="TODAY2")) %>% 
   mutate(nonna_selfmnsi = apply(.[,regexpr(colnames(.),pattern = "selfmnsi")>0],1,function(x) sum(!is.na(x)))) %>%

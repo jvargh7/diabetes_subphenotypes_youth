@@ -1,18 +1,25 @@
 import numpy as np
 import pandas as pd
 from sklearn.impute import KNNImputer
+import os
 
-path = "C:/Users/JGUO258/Documents/JGUO/diabetes_subphenotypes_youth/analysis/dsy01_analytic sample.csv"
-data_mi = pd.read_csv(path) 
+
+if os.getlogin()=="JVARGH7":
+    path_diabetes_subphenotypes_youth_folder = "C:/Cloud/OneDrive - Emory University/Papers/Endotypes in Youth-onset T2DM"
+if os.getlogin()=='JGUO258':
+    path_diabetes_subphenotypes_youth_folder = "C:/Users/JGUO258/OneDrive - Emory/Endotypes in Youth-onset T2DM"
+
+
+data_mi = pd.read_csv(path_diabetes_subphenotypes_youth_folder + '/working/cleaned/setdy01a_analytic sample.csv')
 
 #select variables 
-selected_variables = ['study_id', 'age_category', 'dmduration_category', 'female', 'bmi',
-       'hba1c', 'cpeptidef', 'sbp', 'dbp', 'totalc', 'ldlc', 'hdlc', 'study']
+selected_variables = ["study_id","study","age_category","dmduration_category","race_eth",
+                  "female","bmi","hba1c","cpeptidef","tgl","glucosef","insulinf",
+                  "sbp","dbp","totalc","ldlc","hdlc","insulin","metformin"]
 
 #drop missing values in the selected variables
 data_mi = data_mi[selected_variables]
-data_mi.head()
-
+data_mi.shape
 
 ############### Do KNN Imputation with K = 5 by Study Sites #####################
 columns_to_impute = ["bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc"]
@@ -43,7 +50,8 @@ data_mi.describe()
 imputed_data_merged.describe()
 
 # save the imputed data
-imputed_data_merged.to_csv('C:/Users/JGUO258/Documents/JGUO/diabetes_subphenotypes_youth/analysis/dsy02_kmeans imputation.csv', index=False)
+imputed_data_merged.to_csv(path_diabetes_subphenotypes_youth_folder + '/working/cleaned/setdy02_kmeans imputation.csv', index=False)
+
 
 
 ## elbow plot - find the optimal # of cluster

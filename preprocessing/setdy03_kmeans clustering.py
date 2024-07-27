@@ -13,21 +13,33 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import StandardScaler
 
+if os.getlogin()=="JVARGH7":
+    path_diabetes_subphenotypes_youth_folder = "C:/Cloud/OneDrive - Emory University/Papers/Endotypes in Youth-onset T2DM"
+if os.getlogin()=='JGUO258':
+    path_diabetes_subphenotypes_youth_folder = "C:/Users/JGUO258/OneDrive - Emory/Endotypes in Youth-onset T2DM"
 
-#path = "C:/Users/JGUO258/Documents/JGUO/diabetes_subphenotypes_youth/analysis/dsy01_complete cases df.csv"
-path = "C:/Users/JGUO258/Documents/JGUO/diabetes_subphenotypes_youth/analysis/dsy02_kmeans imputation.csv"
 
-analytic_dataset = pd.read_csv(path) 
+analytic_dataset = pd.read_csv(path_diabetes_subphenotypes_youth_folder + '/working/cleaned/setdy02_kmeans imputation.csv') 
 
 # cluster variables: "bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc"
+
 study = analytic_dataset['study']
 study_id = analytic_dataset['study_id']
 dmduration_category = analytic_dataset['dmduration_category']
+race_eth = analytic_dataset['race_eth']
 female = analytic_dataset['female']
 age_category = analytic_dataset['age_category']
 totalc = analytic_dataset['totalc']
+insulin = analytic_dataset['insulin']
+insulinf = analytic_dataset['insulinf']
+metformin = analytic_dataset['metformin']
+tgl = analytic_dataset['tgl']
+glucosef = analytic_dataset['glucosef']
 
-analytic_dataset = analytic_dataset.drop(columns = ['study_id', 'age_category', 'dmduration_category', 'female','totalc','study'])
+
+
+analytic_dataset = analytic_dataset.drop(columns = ['study_id', 'study', 'age_category', 'dmduration_category', 'race_eth',
+                                                  'female', 'tgl', 'glucosef', 'insulinf','totalc', 'insulin', 'metformin'])
 analytic_dataset.shape
 
 #check if any missing values
@@ -57,18 +69,25 @@ analytic_dataset_cluster['cluster'] = kmeans.labels_
 analytic_dataset_cluster.groupby('cluster').mean()
 
 # relabel the cluster labels 
-# analytic_dataset_cluster['cluster'] = analytic_dataset_cluster['cluster'].replace({0:'SIDD', 1:'MARD', 2:'SIRD', 3:'MOD'})
-# analytic_dataset_cluster['cluster'].value_counts()
+analytic_dataset_cluster['cluster'] = analytic_dataset_cluster['cluster'].replace({0:'OB', 1:'ID', 2:'IR'})
+analytic_dataset_cluster['cluster'].value_counts()
 
 # add study, race, and female back to the dataset
 analytic_dataset_cluster['study'] = study
 analytic_dataset_cluster['study_id'] = study_id
 analytic_dataset_cluster['dmduration_category'] = dmduration_category
+analytic_dataset_cluster['race_eth'] = race_eth
 analytic_dataset_cluster['female'] = female
 analytic_dataset_cluster['age_category'] = age_category
 analytic_dataset_cluster['totalc'] = totalc
+analytic_dataset_cluster['insulin'] = insulin
+analytic_dataset_cluster['insulinf'] = insulinf
+analytic_dataset_cluster['metformin'] = metformin
+analytic_dataset_cluster['tgl'] = tgl
+analytic_dataset_cluster['glucosef'] = glucosef
 
 analytic_dataset_cluster['cluster'].value_counts()
+analytic_dataset_cluster.to_csv(path_diabetes_subphenotypes_youth_folder + '/working/cleaned/setdy03_kmeans clustering.csv', index=False)
  
  
 # plot the clusters
@@ -77,9 +96,13 @@ analytic_dataset_cluster['cluster'].value_counts()
 data_scaled_cluster = data_scaled.copy()
 data_scaled_cluster['cluster'] = kmeans.labels_
 # relabel the cluster labels
-#data_scaled_cluster['cluster'] = data_scaled_cluster['cluster'].replace({0:'SIDD', 1:'MARD', 2:'SIRD', 3:'MOD'})
+data_scaled_cluster['cluster'] = data_scaled_cluster['cluster'].replace({0:'OB', 1:'ID', 2:'IR'})
+
+
 
 import seaborn as sns
+import matplotlib.pyplot as plt
+
 # Create a new DataFrame with the cluster assignments and variables
 data_clustered = pd.concat([data_scaled_cluster['cluster'], data_scaled_cluster[["bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc"]]], axis=1)
 
@@ -87,12 +110,17 @@ data_clustered = pd.concat([data_scaled_cluster['cluster'], data_scaled_cluster[
 data_melted = data_clustered.melt(id_vars='cluster', var_name='Variable', value_name='Value')
 
 # Create the boxplot
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(9.5, 6))  # Adjusted figure size for better layout
 sns.boxplot(x='cluster', y='Value', hue='Variable', data=data_melted)
 plt.title('Variables by Clusters')
 plt.xlabel('Cluster')
 plt.ylabel('Value')
 plt.xticks(rotation=45)
-plt.show()
 
-analytic_dataset_cluster.head()
+# Move the legend to the right of the plot
+plt.legend(title='Variable', bbox_to_anchor=(1.01, 1), loc=2, borderaxespad=0.)
+
+plt.tight_layout()  # Adjust the layout to make room for the legend
+plt.show()
+ 
+plt.savefig("cluster_variables_boxplot.png")

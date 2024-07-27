@@ -1,5 +1,3 @@
-rm(list=ls()); gc(); source(".Rprofile")
-
 source("preprocessing/sepre01_search1to3 variables.R")
 source("preprocessing/sepre02_search4 variables.R")
 
