@@ -1,7 +1,9 @@
 
-vl_column1 = "BASELINE"
-vl_column2 = "PAT"
-vl_column3 = "PRIMOUT"
+# rm(list=ls());gc();source(".Rprofile")
+
+vl_column1 = "baseline"
+vl_column2 = "pat"
+vl_column3 = "primout"
 
 study_name = "TODAY"
 

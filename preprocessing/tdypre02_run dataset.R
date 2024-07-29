@@ -1,5 +1,5 @@
 
-vl_column3 = "RUN"
+vl_column3 = "run"
 study_name = "TODAY"
 
 data_path <- paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/Data/sas7bdat")
