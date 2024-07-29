@@ -1,8 +1,8 @@
 
 set.seed(2022)
 
-today_mnsi <- readRDS(paste0(path_youth_folder,"/working/today/today_mnsi.RDS")) %>% 
-  left_join(readRDS(paste0(path_youth_folder,"/working/today/today_baseline.RDS")) %>% 
+today_mnsi <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_mnsi.RDS")) %>% 
+  left_join(readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_baseline.RDS")) %>% 
               mutate(age_imp = case_when(age == "<=13" ~ runif(nrow(.),min=10,max=13),
                                          age == "14-15" ~ rbinom(nrow(.),1,p=0.5) + 14,
                                          age == ">15" ~ rbinom(nrow(.),1,p=0.5) + 16),
@@ -15,8 +15,8 @@ today_mnsi <- readRDS(paste0(path_youth_folder,"/working/today/today_mnsi.RDS"))
   mutate(age = age_imp + randdays/365)  %>% 
   dplyr::filter(dmduration_baseline == "<=5 months")
 
-search_mnsi <- readRDS(paste0(path_youth_folder,"/working/search/search_mnsi.RDS"))  %>% 
-  left_join(readRDS(paste0(path_youth_folder,"/working/search/search_baseline.RDS")) %>% 
+search_mnsi <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_mnsi.RDS"))  %>% 
+  left_join(readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_baseline.RDS")) %>% 
               dplyr::select(study_id,dmduration) %>% 
               rename(dmduration_baseline = dmduration),
             by = "study_id") %>% 
@@ -103,7 +103,7 @@ fig1 <- fig2_df %>%
   scale_fill_discrete("")
 
 fig1 %>% 
-  ggsave(.,filename = paste0(path_youth_folder,"/figures/research strategy figure_average of symptoms.png"),width=8,height=4)
+  ggsave(.,filename = paste0(path_diabetes_subphenotypes_youth_folder,"/figures/research strategy figure_average of symptoms.png"),width=8,height=4)
 
 
 # HEATMAP -------------
@@ -138,7 +138,7 @@ fig2 <- fig2_df %>%
 
 require(ggpubr)
 fig2 %>% 
-  ggsave(.,filename = paste0(path_youth_folder,"/figures/research strategy figure_heatmap of symptoms.png"),width=8,height=10)
+  ggsave(.,filename = paste0(path_diabetes_subphenotypes_youth_folder,"/figures/research strategy figure_heatmap of symptoms.png"),width=8,height=10)
 
 
 fig2_df %>% 
@@ -148,7 +148,7 @@ fig2_df %>%
 
 fig2_ids <- unique(fig2_df$study_id)
 
-pdf(file = paste0(path_youth_folder,"/figures/research strategy figure_individual heatmaps.pdf"),width = 8,height=4)
+pdf(file = paste0(path_diabetes_subphenotypes_youth_folder,"/figures/research strategy figure_individual heatmaps.pdf"),width = 8,height=4)
 for (i in fig2_ids){
   
   study = fig2_df %>% 

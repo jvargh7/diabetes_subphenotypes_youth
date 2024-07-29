@@ -2,11 +2,10 @@ rm(list=ls()); gc(); source(".Rprofile")
 
 
 search <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_baseline.RDS")) %>% 
-  #dplyr::filter(age >= 10,age<20) %>% 
-  dplyr::filter((age >= 10 & age <= 13) | (age >= 14 & age < 20)) %>% 
+  dplyr::filter(age >= 10,age<20) %>% 
   dplyr::filter(dmduration >= 0 & dmduration <= duration_cutoff) %>% 
   mutate(study_id = as.character(study_id),study = "SEARCH") %>% 
-  mutate(age_category = case_when(age <= 13 ~ "<=13",
+  mutate(age_category = case_when(age < 14 ~ "<=13",
                                   age >15 ~ ">15",
                                   TRUE ~ "14-15"),
          dmduration_category = case_when(dmduration <= 5 ~ "<=5 months",
@@ -26,6 +25,8 @@ selected_vars = c("study_id","study","age_category","dmduration_category","race_
 
 source_df = bind_rows(search %>% dplyr::select(one_of(selected_vars)),
                       today %>% dplyr::select(one_of(selected_vars)))
+
+write.csv(source_df, paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/setdy01c_source sample.csv"))
 
 analytic_df = source_df %>% 
     dplyr::filter(!is.na(hba1c) | !is.na(cpeptidef) | !is.na(totalc) | !is.na(ldlc) | !is.na(hdlc))

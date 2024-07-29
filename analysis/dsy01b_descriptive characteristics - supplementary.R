@@ -41,7 +41,7 @@ ggsave(elbow_plot,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/fig
 
 ## STable 1 - included | excluded
 
-completed_cases <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/setdy01b_complete cases.csv'))
+source_df <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/setdy01c_source sample.csv"))
 analytic_dataset_cluster <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/setdy03_kmeans clustering.csv'))
 
 source("functions/table1_summary.R")
@@ -50,14 +50,14 @@ names(analytic_dataset_cluster)
 
 c_vars = c("bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc","totalc","insulinf","tgl","glucosef")
 p_vars = c("female","insulin","metformin")
-g_vars = c("cluster","study","dmduration_category","age_category","race_eth")
+g_vars = c("study","dmduration_category","age_category","race_eth")
 
-table_df = analytic_dataset_cluster %>% 
+table_df = source_df %>% 
   mutate(study_cca = case_when(
-    study == "SEARCH" & (study_id %in% completed_cases$study_id) ~ "search_included",
-    study == "SEARCH" & !(study_id %in% completed_cases$study_id) ~ "search_excluded",
-    study == "TODAY" & (study_id %in% completed_cases$study_id) ~ "today_included",
-    study == "TODAY" & !(study_id %in% completed_cases$study_id) ~ "today_excluded"
+    study == "SEARCH" & (study_id %in% analytic_dataset_cluster$study_id) ~ "search_included",
+    study == "SEARCH" & !(study_id %in% analytic_dataset_cluster$study_id) ~ "search_excluded",
+    study == "TODAY" & (study_id %in% analytic_dataset_cluster$study_id) ~ "today_included",
+    study == "TODAY" & !(study_id %in% analytic_dataset_cluster$study_id) ~ "today_excluded"
   )) %>% 
   bind_rows(.,
             {.} %>% 
@@ -89,7 +89,7 @@ table_df <- read_csv("analysis/dsy01a_descriptive characteristics - total by stu
   )) %>% 
   dplyr::select(variable,group,study_cca,output) %>% 
   pivot_wider(names_from=study_cca,values_from=output) %>% 
-  dplyr::select(variable,group,Total,search_included,search_excluded,today_included,today_excluded)
+  dplyr::select(variable,group,Total,search_included,search_excluded,today_included)
 
 write_csv(table_df,"paper/table_descriptive characteristics by study and cca.csv")  
 

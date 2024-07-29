@@ -1,8 +1,8 @@
 
 set.seed(2022)
 
-today_mnsi <- readRDS(paste0(path_youth_folder,"/working/today/today_mnsi.RDS")) %>% 
-  left_join(readRDS(paste0(path_youth_folder,"/working/today/today_baseline.RDS")) %>% 
+today_mnsi <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_mnsi.RDS")) %>% 
+  left_join(readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_baseline.RDS")) %>% 
               mutate(age_imp = case_when(age == "<=13" ~ runif(nrow(.),min=10,max=13),
                                          age == "14-15" ~ rbinom(nrow(.),1,p=0.5) + 14,
                                          age == ">15" ~ rbinom(nrow(.),1,p=0.5) + 16),
@@ -15,8 +15,8 @@ today_mnsi <- readRDS(paste0(path_youth_folder,"/working/today/today_mnsi.RDS"))
   mutate(age = age_imp + randdays/365)  %>% 
   dplyr::filter(dmduration_baseline == "<=5 months")
 
-search_mnsi <- readRDS(paste0(path_youth_folder,"/working/search/search_mnsi.RDS"))  %>% 
-  left_join(readRDS(paste0(path_youth_folder,"/working/search/search_baseline.RDS")) %>% 
+search_mnsi <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_mnsi.RDS"))  %>% 
+  left_join(readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_baseline.RDS")) %>% 
               dplyr::select(study_id,dmduration) %>% 
               rename(dmduration_baseline = dmduration),
             by = "study_id") %>% 
@@ -64,7 +64,7 @@ ggarrange(fig3A,fig3B,
           labels=c("A. Left","B. Right"),
           common.legend=TRUE,
           legend="bottom") %>% 
-  ggsave(.,filename = paste0(path_youth_folder,"/figures/research strategy figure_probability abnormal foot.png"),width=8,height=4)
+  ggsave(.,filename = paste0(path_diabetes_subphenotypes_youth_folder,"/figures/research strategy figure_probability abnormal foot.png"),width=8,height=4)
 
 fig3_df %>% 
   distinct(study_id,.keep_all=TRUE) %>% 
