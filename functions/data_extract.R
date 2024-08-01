@@ -7,10 +7,19 @@ data_extract <- function(study_name, vl_column,data_path,df_name = character()){
   }
   
   
-  # vl_sheet = readxl::read_excel("C:/code/phenotypes/shared/data/Phenotypes Variable List.xlsx",
-  #                               sheet=study_name)
-  vl_sheet = readxl::read_excel("C:/Users/JGUO258/Documents/JGUO/diabetes_subphenotypes_youth/data/Phenotypes Variable List.xlsx",
-                                sheet=study_name)
+  
+  
+  if(Sys.info()["user"] == "JVARGH7"){
+    vl_sheet = readxl::read_excel("C:/code/external/diabetes_endotypes_cohorts/data/Phenotypes Variable List.xlsx",
+                                  sheet=study_name)
+  }
+  
+  if(Sys.info()["user"] == "JGUO258"){
+    vl_sheet = readxl::read_excel("C:/Users/JGUO258/Documents/JGUO/diabetes_subphenotypes_youth/data/Phenotypes Variable List.xlsx",
+                                  sheet=study_name)
+  }
+  
+  
   
   var_names <- vl_sheet %>% 
     dplyr::select(label,harmonized,one_of(vl_column)) %>% 

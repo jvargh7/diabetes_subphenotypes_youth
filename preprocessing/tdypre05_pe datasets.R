@@ -1,4 +1,4 @@
-vl_pe1 = "PE"
+vl_pe1 = "pe"
 vl_pe2 = "PEMD"
 
 data_path1 <- paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/Data/sas7bdat")

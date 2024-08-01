@@ -1,6 +1,6 @@
 
-vl_column4 = "CBL"
-vl_column5 = "VISIT"
+vl_column4 = "cbl"
+vl_column5 = "visit"
 
 data_path1 <- paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/Data/sas7bdat")
 data_path2 <- paste0(path_diabetes_subphenotypes_youth_folder,"/working/today2/Data")

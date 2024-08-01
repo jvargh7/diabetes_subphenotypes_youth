@@ -1,5 +1,7 @@
-vl_neuro1 = "NEURO"
+vl_neuro1 = "neuro"
 vl_neuro2 = "MNSIFINAL"
+
+study_name = "TODAY"
 
 data_path1 <- paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/Data/sas7bdat")
 data_path2 <- paste0(path_diabetes_subphenotypes_youth_folder,"/working/today2/Data")
