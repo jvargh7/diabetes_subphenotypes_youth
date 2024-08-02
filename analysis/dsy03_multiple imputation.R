@@ -1,16 +1,22 @@
 rm(list=ls());gc();source(".Rprofile")
 
-crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy02a_cross sectional df.RDS")) %>% 
-  dplyr::select(-"nonna_selfmnsi")
+# crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy02a_cross sectional df.RDS")) %>% 
+#   dplyr::select(-"nonna_selfmnsi")
 
-### MNSI scores all missing, N = 160
-all_na <- crosssec_df %>% 
+longitudinal_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy02b_longitudinal df.RDS")) %>% 
+  dplyr::select(-"nonna_selfmnsi") 
+
+
+
+# MNSI scores all missing
+## N = 160 in cross-sectional
+## N = 160 in longitudinal
+all_na <- longitudinal_df %>% 
   dplyr::filter(is.na(combined_abnormal))
 
 ### partially missing MNSI scores, N = 562
-part_na <- crosssec_df %>% 
-  dplyr::filter(!is.na(combined_abnormal)) %>% 
-  dplyr::select("study_id","study","cluster","female","age_category","race_eth",contains("mnsi"))
+part_na <- longitudinal_df %>% 
+  dplyr::filter(!is.na(combined_abnormal)) 
 
 #-----------------------------------------------------------------------------------------------------------------------
 ## Multiple Imputation for MNSI measurements
@@ -21,11 +27,11 @@ proportion_vars <- c(selfmnsi_columns, "obsmnsir1","obsmnsir2","obsmnsir3","obsm
                      "obsmnsir5","obsmnsil","obsmnsil1","obsmnsil2","obsmnsil3","obsmnsil4",       
                      "obsmnsil5","obsmnsir_ulcer","obsmnsil_ulcer","female")
 
-grouped_vars <- c("age_category","race_eth","obsmnsir","obsmnsil", "obsmnsir_reflex",    
+grouped_vars <- c("clustering_age_category","race_eth","obsmnsir","obsmnsil", "obsmnsir_reflex",    
                   "obsmnsil_reflex","obsmnsir_perception","obsmnsil_perception", 
                   "obsmnsir_filament","obsmnsil_filament")
 
-id_vars = c("study_id","study","cluster")
+id_vars = c("study_id","study","cluster","wave","randdays","release_visit","include","earliest")
 #--------------------------------------------------------------------------------
 require(survey)
 require(mice)
@@ -38,9 +44,11 @@ mi_null <- mice(impute_df, maxit = 0)
 method = mi_null$method
 pred = mi_null$predictorMatrix
 
-pred[c("study_id","study","cluster"),] <- 0
-pred[,c("study_id","study","cluster")] <- 0
+pred[id_vars,] <- 0
+pred[,id_vars] <- 0
 
+method[proportion_vars] = "logreg"
+method[id_vars] <- ""
 
 mi_dfs <- mice(impute_df,
                method = method,
@@ -49,12 +57,12 @@ mi_dfs <- mice(impute_df,
 
 saveRDS(mi_dfs, "analysis/dsy03_mi_dfs.RDS")
 #--------------------------------------------------------------------------------
-source("functions/add_variable_mi.R")
-
-completed_dfs <- mice::complete(mi_dfs, "long") %>%
-  group_by(.imp) %>%
-  nest() %>%
-  mutate(data = map(data, add_variable_mi)) %>%
-  unnest(data)
+# source("functions/add_variable_mi.R")
+# 
+# completed_dfs <- mice::complete(mi_dfs, "long") %>%
+#   group_by(.imp) %>%
+#   nest() %>%
+#   mutate(data = map(data, add_variable_mi)) %>%
+#   unnest(data)
 
 

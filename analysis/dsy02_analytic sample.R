@@ -86,60 +86,107 @@ mnsi <- bind_rows(readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/work
 # cross-sectional      722
 # longitudinal         474
 #--------------------------------------------------------------------------------------
-analytic_sedf <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/setdy03_kmeans clustering.csv')) %>% 
-  dplyr::filter(study == "SEARCH") %>% 
-  left_join(mnsi %>% dplyr::filter(study == "SEARCH"))
 
-longitudinal_sedf <- analytic_sedf %>%
-  group_by(study_id,study) %>%
-  dplyr::filter(n() > 1) %>%
-  ungroup() # N=150
+# Updated ------------
+analytic_sedf <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/setdy03_kmeans clustering.csv')) 
 
-unique_sedf <- analytic_sedf %>% 
-  dplyr::filter(!study_id %in% longitudinal_sedf$study_id) # N=235
 
-crosssec_se <- bind_rows(longitudinal_sedf %>% 
-                           dplyr::filter(wave == "SEARCH 1 TO 3"),
-                         unique_sedf) # 385
+crosssec_df <-  analytic_sedf %>% 
+  left_join(
+    mnsi %>% 
+      group_by(study,study_id) %>% 
+      mutate(include = case_when(study == "SEARCH" & age == min(age) ~ 1,
+                                 study == "TODAY" & randdays == 0 ~ 1,
+                                 TRUE ~ 0),
+             randdays = (age - min(age))*365) %>% 
+        ungroup() %>% 
+      dplyr::filter(include == 1),
+      by = c("study","study_id")
+    
+  )
 
-#--------------------------------------------------------
-analytic_tdydf <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/setdy03_kmeans clustering.csv')) %>% 
-  dplyr::filter(study == "TODAY") %>% 
-  left_join(mnsi %>% dplyr::filter(study == "TODAY"))
+longitudinal_df <- analytic_sedf %>% 
+  rename_with(.cols = one_of("bmi","hba1c","cpeptidef",
+                             "sbp","dbp","ldlc","hdlc",
+                             "dmduration_category","age_category",
+                             "totalc","insulin","insulinf","tgl","glucosef"),~paste0("clustering_",.)) %>% 
+  left_join(
+    mnsi %>% 
+      group_by(study,study_id) %>% 
+      mutate(include = 1,
+             earliest = case_when(study == "SEARCH" & age == min(age) ~ 1,
+                                 study == "TODAY" & randdays == 0 ~ 1,
+                                 TRUE ~ 0),
+             randdays = (age - min(age))*365) %>%
+      ungroup() %>% 
+      dplyr::filter(include == 1),
+    by = c("study","study_id")
+    
+  )
 
-longitudinal_tdydf <- analytic_tdydf %>%
-  group_by(study_id,study) %>%
-  dplyr::filter(n() > 1) %>%
-  ungroup() # N=324
-
-unique_tdydf <- analytic_tdydf %>% 
-  dplyr::filter(!study_id %in% longitudinal_tdydf$study_id) # N=13
-
-crosssec_tdy <- bind_rows(longitudinal_tdydf %>% 
-                            group_by(study_id,study) %>%
-                            dplyr::filter(randdays == min(randdays)) %>% # Days since randomization
-                            ungroup(),
-                          unique_tdydf) # 337
-
-#--------------------------------------------------------
-crosssec_df <- full_join(crosssec_se, crosssec_tdy) 
-
-longitudinal_df <- full_join(longitudinal_sedf, longitudinal_tdydf) # N = 474
+table(longitudinal_df$earliest)
 
 saveRDS(crosssec_df,paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy02a_cross sectional df.RDS"))
 saveRDS(longitudinal_df,paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy02b_longitudinal df.RDS"))
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+# analytic_sedf <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/setdy03_kmeans clustering.csv')) %>% 
+#   dplyr::filter(study == "SEARCH") %>% 
+#   left_join(mnsi %>% dplyr::filter(study == "SEARCH"))
+# 
+# longitudinal_sedf <- analytic_sedf %>%
+#   group_by(study_id,study) %>%
+#   dplyr::filter(n() > 1) %>%
+#   ungroup() # N=150
+# 
+# unique_sedf <- analytic_sedf %>% 
+#   dplyr::filter(!study_id %in% longitudinal_sedf$study_id) # N=235
+# 
+# crosssec_se <- bind_rows(longitudinal_sedf %>% 
+#                            dplyr::filter(wave == "SEARCH 1 TO 3"),
+#                          unique_sedf) # 385
+# 
+# #--------------------------------------------------------
+# 
+# # Question: Why aren't the left_join parameters specified?
+# analytic_tdydf <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/setdy03_kmeans clustering.csv')) %>% 
+#   dplyr::filter(study == "TODAY") %>% 
+#   left_join(mnsi %>% dplyr::filter(study == "TODAY"))
+# 
+# longitudinal_tdydf <- analytic_tdydf %>%
+#   group_by(study_id,study) %>%
+#   dplyr::filter(n() > 1) %>%
+#   ungroup() # N=324
+# 
+# unique_tdydf <- analytic_tdydf %>% 
+#   dplyr::filter(!study_id %in% longitudinal_tdydf$study_id) # N=13
+# 
+# crosssec_tdy <- bind_rows(longitudinal_tdydf %>% 
+#                             group_by(study_id,study) %>%
+#                             dplyr::filter(randdays == min(randdays)) %>% # Days since randomization
+#                             ungroup(),
+#                           unique_tdydf) # 337
+# 
+# #--------------------------------------------------------
+# crosssec_df <- full_join(crosssec_se, crosssec_tdy) 
+# 
+# longitudinal_df <- full_join(longitudinal_sedf, longitudinal_tdydf) # N = 474
+# 
+# saveRDS(crosssec_df,paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy02a_cross sectional df.RDS"))
+# saveRDS(longitudinal_df,paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy02b_longitudinal df.RDS"))
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
