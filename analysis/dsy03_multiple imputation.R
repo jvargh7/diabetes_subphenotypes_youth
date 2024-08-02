@@ -46,8 +46,9 @@ mi_dfs <- mice(impute_df,
                method = method,
                pred = pred,
                m=10,maxit=50,seed=500)
-#--------------------------------------------------------------------------------
 
+saveRDS(mi_dfs, "analysis/dsy03_mi_dfs.RDS")
+#--------------------------------------------------------------------------------
 source("functions/add_variable_mi.R")
 
 completed_dfs <- mice::complete(mi_dfs, "long") %>%
@@ -56,4 +57,4 @@ completed_dfs <- mice::complete(mi_dfs, "long") %>%
   mutate(data = map(data, add_variable_mi)) %>%
   unnest(data)
 
-saveRDS(mi_dfs, "analysis/dsy02b_mi_dfs.RDS")
+
