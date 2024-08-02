@@ -31,7 +31,7 @@ grouped_vars <- c("clustering_age_category","race_eth","obsmnsir","obsmnsil", "o
                   "obsmnsil_reflex","obsmnsir_perception","obsmnsil_perception", 
                   "obsmnsir_filament","obsmnsil_filament")
 
-id_vars = c("study_id","study","cluster","wave","randdays","release_visit","include","earliest")
+id_vars = c("study_id","study","cluster","wave","randdays","age_diff","release_visit","include","earliest")
 #--------------------------------------------------------------------------------
 require(survey)
 require(mice)

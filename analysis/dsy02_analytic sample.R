@@ -118,7 +118,7 @@ longitudinal_df <- analytic_sedf %>%
              earliest = case_when(study == "SEARCH" & age == min(age) ~ 1,
                                  study == "TODAY" & randdays == 0 ~ 1,
                                  TRUE ~ 0),
-             age_diff = case_when(study == "SEARCH" ~ (age - min(age))*365,
+             age_diff = case_when(study == "SEARCH" ~ (age - min(age)),
                                   TRUE ~ randdays/365)) %>%
       ungroup() %>% 
       dplyr::filter(include == 1),

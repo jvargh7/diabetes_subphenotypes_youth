@@ -85,7 +85,7 @@ for (i in 1:mi_dfs$m) {
     mutate(combined_abnormal = case_when(survey_abnormal == 1 | exam_abnormal == 1 ~ 1,
                                          TRUE ~ 0)) %>% 
     left_join(crosssec_df %>% 
-                dplyr::select(study,study_id,ltfu_prob,ltfu_weight),
+                dplyr::select(study,study_id,age_category,ltfu_prob,ltfu_weight),
               by = c("study","study_id"))
   # mi_dfs$imp[[i]] <- transformed_data
   

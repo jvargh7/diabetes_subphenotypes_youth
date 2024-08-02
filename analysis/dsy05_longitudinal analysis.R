@@ -2,10 +2,12 @@
 rm(list=ls());gc();source(".Rprofile")
 
 longitudinal_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy02b_longitudinal df.RDS"))
+crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy02a_cross sectional df.RDS"))
 
 mi_dfs <- readRDS("analysis/dsy03_mi_dfs.RDS")
 
 library(geepack)
+library(mice)
 
 survey_mod <- exam_mod <- combined_mod <- list()
 
@@ -74,72 +76,70 @@ for (i in 1:mi_dfs$m) {
     mutate(combined_abnormal = case_when(survey_abnormal == 1 | exam_abnormal == 1 ~ 1,
                                          TRUE ~ 0))
 
-  
-     
-  
-  
-      survey_followup_data = complete_data %>% 
+    combined_followup_data = complete_data %>% 
         dplyr::filter(earliest == 0) %>% 
-        dplyr::select(study,study_id,survey_score,survey_abnormal,randdays) %>% 
-        right_join(
-          complete_data %>% 
-            dplyr::filter(earliest == 1,survey_abnormal == 0) %>%
-            dplyr::select(study,study_id,cluster,cluster_age_category,female,race_eth),
-          by = c("study","study_id")
-          
-        ) %>% 
-        mutate(followup_available = case_when(is.na(survey_abnormal) ~ 0,
-                                              TRUE ~ 1))
-      
-      exam_followup_data = complete_data %>% 
-        dplyr::filter(earliest == 0) %>% 
-        dplyr::select(study,study_id,exam_score,exam_abnormal,randdays) %>% 
-        right_join(
-          complete_data %>% 
-            dplyr::filter(earliest == 1,exam_abnormal == 0) %>%
-            dplyr::select(study,study_id,cluster,cluster_age_category,female,race_eth),
-          by = c("study","study_id")
-          
-        ) %>% 
-        mutate(followup_available = case_when(is.na(exam_abnormal) ~ 0,
-                                              TRUE ~ 1))
-      
-      combined_followup_data = complete_data %>% 
-        dplyr::filter(earliest == 0) %>% 
-        dplyr::select(study,study_id,combined_abnormal,randdays) %>% 
+        dplyr::select(study,study_id,combined_abnormal,survey_score,survey_abnormal,exam_score,exam_abnormal,age_diff) %>% 
         right_join(
           complete_data %>% 
             dplyr::filter(earliest == 1,combined_abnormal == 0) %>%
-            dplyr::select(study,study_id,cluster,cluster_age_category,female,race_eth),
+            dplyr::select(study,study_id,cluster,clustering_age_category,female,race_eth),
           by = c("study","study_id")
-          
-        )
+        ) %>% 
+      group_by(study,study_id) %>% 
+      dplyr::filter(age_diff == min(age_diff)) %>% 
+      ungroup()
       
-
+    # Create longitudinal_ltful_weight
+    
+    longitudinal_ltfu_df = crosssec_df %>% 
+      inner_join(complete_data %>% 
+                   dplyr::filter(earliest == 1,combined_abnormal == 0) %>% 
+                   dplyr::select(study,study_id),
+                 by = c("study","study_id")) %>% 
+      left_join(combined_followup_data %>% 
+                  dplyr::select(study,study_id) %>% 
+                  mutate(longitudinal_available = 1),
+                by = c("study","study_id")
+                  ) %>% 
+      mutate(longitudinal_available = case_when(is.na(longitudinal_available) ~ 0,
+                                                TRUE ~ longitudinal_available))
+    
+    longitudinal_available_mod <- glm(longitudinal_available ~ cluster + age_category + female + race_eth + study, 
+                            data = longitudinal_ltfu_df, 
+                            family = poisson(link = "log"))
+    longitudinal_ltfu_df$longitudinal_ltfu_prob = predict(longitudinal_available_mod,newdata=longitudinal_ltfu_df,type="response")
+    longitudinal_ltfu_df$longitudinal_ltfu_weight = 1/longitudinal_ltfu_df$longitudinal_ltfu_prob
+    
+    combined_followup_data_weights = combined_followup_data %>% 
+      left_join(longitudinal_ltfu_df %>% 
+                  dplyr::select(study,study_id,longitudinal_ltfu_prob,longitudinal_ltfu_weight),
+                by = c("study","study_id"))
       
       
       # mi_dfs$imp[[i]] <- transformed_data
       
-      survey_mod[[i]] <- geeglm(survey_abnormal ~ cluster + age_category + female + race_eth + randdays, 
-                                data = survey_followup_data, 
+      survey_mod[[i]] <- geeglm(survey_abnormal ~ cluster + clustering_age_category + female + race_eth + age_diff, 
+                                data = combined_followup_data_weights, 
                                 family = poisson(link = "log"), 
                                 # This is incorrect - we are not trying to cluster on the cluster! This is the clustering for repeated measures!
                                 id = study_id,
-                                weights = ltfu_weight, 
+                                weights = longitudinal_ltfu_weight, 
                                 corstr = "independence")
-      exam_mod[[i]] <- geeglm(exam_abnormal ~ cluster + age_category + female + race_eth + randdays, 
-                              data = exam_followup_data, 
+      
+      exam_mod[[i]] <- geeglm(exam_abnormal ~ cluster + clustering_age_category + female + race_eth + age_diff, 
+                              data = combined_followup_data_weights, 
                               family = poisson(link = "log"), 
                               # This is incorrect - we are not trying to cluster on the cluster! This is the clustering for repeated measures!
                               id = study_id,
-                              weights = ltfu_weight, 
+                              weights = longitudinal_ltfu_weight, 
                               corstr = "independence")
-      combined_mod[[i]] <- geeglm(combined_abnormal ~ cluster + age_category + female + race_eth + randdays, 
-                                  data = combined_followup_data, 
+      
+      combined_mod[[i]] <- geeglm(combined_abnormal ~ cluster + clustering_age_category + female + race_eth + age_diff, 
+                                  data = combined_followup_data_weights, 
                                   family = poisson(link = "log"), 
                                   # This is incorrect - we are not trying to cluster on the cluster! This is the clustering for repeated measures!
                                   id = study_id,
-                                  weights = ltfu_weight, 
+                                  weights = longitudinal_ltfu_weight, 
                                   corstr = "independence")
         
 
@@ -147,4 +147,26 @@ for (i in 1:mi_dfs$m) {
   
   
 }
+
+
+# Please download the latest version ----
+
+# https://github.com/jvargh7/functions/blob/main/imputation/adjusted_ci.R
+# download.file("https://github.com/jvargh7/functions/blob/main/imputation/adjusted_ci.R",destfile = "")
+source("C:/code/external/functions/imputation/adjusted_ci.R")
+# https://github.com/jvargh7/functions/blob/main/imputation/clean_mi_conditionalregression.R
+source("C:/code/external/functions/imputation/clean_mi_conditionalregression.R")
+
+survey_mod_out = clean_mi_conditionalregression(survey_mod,link="geeglm log")
+exam_mod_out = clean_mi_conditionalregression(exam_mod,link="geeglm log")
+combined_mod_out = clean_mi_conditionalregression(combined_mod,link="geeglm log")
+
+bind_rows(
+  
+  survey_mod_out %>% mutate(outcome = "survey_abnormal"),
+  exam_mod_out %>% mutate(outcome = "exam_abnormal"),
+  combined_mod_out %>% mutate(outcome = "combined_abnormal")
+  
+) %>% 
+  write_csv(.,"analysis/dsy05_longitudinal coefficients.csv")
   
