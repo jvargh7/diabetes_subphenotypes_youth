@@ -1,0 +1,59 @@
+
+add_variable_mi <- function(data) {
+  data <- data %>%
+    # Questionnaire
+    mutate(across(c(selfmnsi1:selfmnsi3, selfmnsi5:selfmnsi6, selfmnsi8:selfmnsi9, selfmnsi11:selfmnsi12, selfmnsi14:selfmnsi15), 
+                  ~ifelse(. == 1, 1, 0))) %>%
+    mutate(across(c(selfmnsi7, selfmnsi13), ~ifelse(. == 0, 1, 0))) %>%
+    rowwise() %>%
+    mutate(survey_score = sum(c_across(selfmnsi1:selfmnsi15), na.rm = TRUE)) %>%
+    mutate(survey_abnormal = case_when(survey_score >= 4 ~ 1, TRUE ~ 0)) %>%
+    ungroup() %>%
+    # Examination
+    mutate(Deformities = case_when(obsmnsir1 == 1 | obsmnsil1 == 1 ~ 1,
+                                   obsmnsir1 == 0 & obsmnsil1 == 0 ~ 0,
+                                   TRUE ~ NA_real_),
+           Dryskin = case_when(obsmnsir2 == 1 | obsmnsil2 == 1 ~ 1,
+                               obsmnsir2 == 0 & obsmnsil2 == 0 ~ 0,
+                               TRUE ~ NA_real_),
+           Infection = case_when(obsmnsir3 == 1 | obsmnsil3 == 1 ~ 1,
+                                 obsmnsir3 == 0 & obsmnsil3 == 0 ~ 0,
+                                 TRUE ~ NA_real_),
+           Fissure = case_when(obsmnsir4 == 1 | obsmnsil4 == 1 ~ 1,
+                               obsmnsir4 == 0 & obsmnsil4 == 0 ~ 0,
+                               TRUE ~ NA_real_),
+           Ulceration = case_when(obsmnsir_ulcer == 1 | obsmnsil_ulcer == 1 ~ 1,
+                                  obsmnsir_ulcer == 0 & obsmnsil_ulcer == 0 ~ 0,
+                                  TRUE ~ NA_real_)) %>%
+    mutate(R1_abnormalormal = case_when(obsmnsir1 == 1 | obsmnsir2 == 1 | obsmnsir3 == 1 | obsmnsir4 == 1 ~ 1,
+                                        TRUE ~ 0),
+           R2_Ulceration = obsmnsir_ulcer,
+           R3_Reflex = case_when(obsmnsir_reflex == "Absent" ~ 1,
+                                 obsmnsir_reflex == "Reduced" ~ 0.5,
+                                 obsmnsir_reflex == "Present" ~ 0,
+                                 TRUE ~ NA_real_),
+           R4_Perception = case_when(obsmnsir_perception == "Absent"  ~ 1,
+                                     obsmnsir_perception == "Reduced"  ~ 0.5,
+                                     obsmnsir_perception == "Present" ~ 0,
+                                     TRUE ~ NA_real_),
+           L1_abnormalormal = case_when(obsmnsil1 == 1 | obsmnsil2 == 1 | obsmnsil3 == 1 | obsmnsil4 == 1 ~ 1,
+                                        TRUE ~ 0),
+           L2_Ulceration = obsmnsil_ulcer,
+           L3_Reflex = case_when(obsmnsil_reflex == "Absent" ~ 1,
+                                 obsmnsil_reflex == "Reduced" ~ 0.5,
+                                 obsmnsil_reflex == "Present" ~ 0,
+                                 TRUE ~ NA_real_),
+           L4_Perception = case_when(obsmnsil_perception == "Absent"  ~ 1,
+                                     obsmnsil_perception == "Reduced"  ~ 0.5,
+                                     obsmnsil_perception == "Present" ~ 0,
+                                     TRUE ~ NA_real_)) %>%
+    rowwise() %>%
+    mutate(exam_score = sum(c(R1_abnormalormal, R2_Ulceration, R3_Reflex, R4_Perception,
+                              L1_abnormalormal, L2_Ulceration, L3_Reflex, L4_Perception), na.rm = TRUE)) %>%
+    mutate(exam_abnormal = case_when(exam_score >= 2.5 ~ 1, TRUE ~ 0)) %>%
+    ungroup() %>%
+    # Combination
+    mutate(combined_abnormal = case_when(survey_abnormal == 1 | exam_abnormal == 1 ~ 1, TRUE ~ 0))
+  
+  return(data)
+}
