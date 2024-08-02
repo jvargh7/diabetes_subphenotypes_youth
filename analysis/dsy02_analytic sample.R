@@ -98,7 +98,8 @@ crosssec_df <-  analytic_sedf %>%
       mutate(include = case_when(study == "SEARCH" & age == min(age) ~ 1,
                                  study == "TODAY" & randdays == 0 ~ 1,
                                  TRUE ~ 0),
-             randdays = (age - min(age))*365) %>% 
+             age_diff = case_when(study == "SEARCH" ~ (age - min(age))*365,
+                                  TRUE ~ randdays/365)) %>% 
         ungroup() %>% 
       dplyr::filter(include == 1),
       by = c("study","study_id")
@@ -117,7 +118,8 @@ longitudinal_df <- analytic_sedf %>%
              earliest = case_when(study == "SEARCH" & age == min(age) ~ 1,
                                  study == "TODAY" & randdays == 0 ~ 1,
                                  TRUE ~ 0),
-             randdays = (age - min(age))*365) %>%
+             age_diff = case_when(study == "SEARCH" ~ (age - min(age))*365,
+                                  TRUE ~ randdays/365)) %>%
       ungroup() %>% 
       dplyr::filter(include == 1),
     by = c("study","study_id")
@@ -152,7 +154,7 @@ saveRDS(longitudinal_df,paste0(path_diabetes_subphenotypes_youth_folder,"/workin
 # # Question: Why aren't the left_join parameters specified?
 # analytic_tdydf <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/setdy03_kmeans clustering.csv')) %>% 
 #   dplyr::filter(study == "TODAY") %>% 
-#   left_join(mnsi %>% dplyr::filter(study == "TODAY"))
+#   left_join(mnsi %>% dplyr::select() %>% dplyr::filter(study == "TODAY"),by=c("study","study_id"))
 # 
 # longitudinal_tdydf <- analytic_tdydf %>%
 #   group_by(study_id,study) %>%
