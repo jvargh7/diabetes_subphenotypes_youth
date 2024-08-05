@@ -14,13 +14,14 @@ from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import StandardScaler
 
 if os.getlogin()=="JVARGH7":
-    path_diabetes_subphenotypes_youth_folder = "C:/Cloud/OneDrive - Emory University/Papers/Endotypes in Youth-onset T2DM"
+    path_diabetes_subphenotypes_youth_folder = "C:/Cloud/OneDrive - Emory University/Papers/Subphenotypes in Youth-onset T2DM"
 if os.getlogin()=='JGUO258':
-    path_diabetes_subphenotypes_youth_folder = "C:/Users/JGUO258/OneDrive - Emory/Endotypes in Youth-onset T2DM"
+    path_diabetes_subphenotypes_youth_folder = "C:/Users/JGUO258/OneDrive - Emory/Subphenotypes in Youth-onset T2DM"
 
 
-analytic_dataset = pd.read_csv(path_diabetes_subphenotypes_youth_folder + '/working/cleaned/setdy02_kmeans imputation.csv') 
+analytic_dataset = pd.read_csv(path_diabetes_subphenotypes_youth_folder + '/working/cleaned/setdy02b_kmeans imputation add residuals.csv') 
 
+#----------------------------------------------------------------------------------------------------------------------------------
 # cluster variables: "bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc"
 
 study = analytic_dataset['study']
@@ -57,7 +58,7 @@ data_scaled = pd.DataFrame(data_scaled, columns=analytic_dataset.columns)
 data_scaled.head()
 
 # select variables to cluster
-var = ["bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc"]
+var = ["bmi_residual","hba1c_residual","cpeptidef_residual", "sbp_residual","dbp_residual","ldlc_residual","hdlc_residual"]
 cluster_var = data_scaled[var]
 
 kmeans = KMeans(init="random", n_clusters=3, n_init=10, max_iter=300, random_state=57)
@@ -69,7 +70,7 @@ analytic_dataset_cluster['cluster'] = kmeans.labels_
 analytic_dataset_cluster.groupby('cluster').mean()
 
 # relabel the cluster labels 
-analytic_dataset_cluster['cluster'] = analytic_dataset_cluster['cluster'].replace({0:'OB', 1:'ID', 2:'IR'})
+analytic_dataset_cluster['cluster'] = analytic_dataset_cluster['cluster'].replace({0:'MOD', 1:'SIDD', 2:'SIRD'})
 analytic_dataset_cluster['cluster'].value_counts()
 
 # add study, race, and female back to the dataset
@@ -89,14 +90,15 @@ analytic_dataset_cluster['glucosef'] = glucosef
 analytic_dataset_cluster['cluster'].value_counts()
 analytic_dataset_cluster.to_csv(path_diabetes_subphenotypes_youth_folder + '/working/cleaned/setdy03_kmeans clustering.csv', index=False)
  
- 
+
+#---------------------------------------------------------------------------------------------------------------------------------------------- 
 # plot the clusters
 # add the cluster labels to the copy of the scaled data
 
 data_scaled_cluster = data_scaled.copy()
 data_scaled_cluster['cluster'] = kmeans.labels_
 # relabel the cluster labels
-data_scaled_cluster['cluster'] = data_scaled_cluster['cluster'].replace({0:'OB', 1:'ID', 2:'IR'})
+data_scaled_cluster['cluster'] = data_scaled_cluster['cluster'].replace({0:'MOD', 1:'SIDD', 2:'SIRD'})
 
 
 

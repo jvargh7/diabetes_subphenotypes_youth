@@ -88,15 +88,14 @@ mnsi <- bind_rows(readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/work
 #--------------------------------------------------------------------------------------
 
 # Updated ------------
-analytic_sedf <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/setdy03_kmeans clustering.csv')) 
+analytic_df <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/setdy03_kmeans clustering.csv')) 
 
 
-crosssec_df <-  analytic_sedf %>% 
+crosssec_df <-  analytic_df %>% 
   left_join(
     mnsi %>% 
-      group_by(study,study_id) %>% 
       mutate(include = case_when(study == "SEARCH" & age == min(age) ~ 1,
-                                 study == "TODAY" & randdays == 0 ~ 1,
+                                 study == "TODAY" & randdays == min(randdays) & randdays %in% c(0:365)  ~ 1,
                                  TRUE ~ 0),
              age_diff = case_when(study == "SEARCH" ~ (age - min(age))*365,
                                   TRUE ~ randdays/365)) %>% 
@@ -106,9 +105,9 @@ crosssec_df <-  analytic_sedf %>%
     
   )
 
-longitudinal_df <- analytic_sedf %>% 
-  rename_with(.cols = one_of("bmi","hba1c","cpeptidef",
-                             "sbp","dbp","ldlc","hdlc",
+longitudinal_df <- analytic_df %>% 
+  rename_with(.cols = one_of("bmi_residual","hba1c_residual","cpeptidef_residual",
+                             "sbp_residual","dbp_residual","ldlc_residual","hdlc_residual",
                              "dmduration_category","age_category",
                              "totalc","insulin","insulinf","tgl","glucosef"),~paste0("clustering_",.)) %>% 
   left_join(
@@ -116,8 +115,8 @@ longitudinal_df <- analytic_sedf %>%
       group_by(study,study_id) %>% 
       mutate(include = 1,
              earliest = case_when(study == "SEARCH" & age == min(age) ~ 1,
-                                 study == "TODAY" & randdays == 0 ~ 1,
-                                 TRUE ~ 0),
+                                  study == "TODAY" & randdays == min(randdays) & randdays %in% c(0:365) ~ 1,
+                                  TRUE ~ 0),
              age_diff = case_when(study == "SEARCH" ~ (age - min(age)),
                                   TRUE ~ randdays/365)) %>%
       ungroup() %>% 

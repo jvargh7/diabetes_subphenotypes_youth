@@ -24,7 +24,7 @@ colnames(part_na)
 
 selfmnsi_columns <- names(part_na)[grep("selfmnsi", names(part_na))]
 proportion_vars <- c(selfmnsi_columns, "obsmnsir1","obsmnsir2","obsmnsir3","obsmnsir4", 
-                     "obsmnsir5","obsmnsil","obsmnsil1","obsmnsil2","obsmnsil3","obsmnsil4",       
+                     "obsmnsir5","obsmnsil1","obsmnsil2","obsmnsil3","obsmnsil4",       
                      "obsmnsil5","obsmnsir_ulcer","obsmnsil_ulcer","female")
 
 grouped_vars <- c("clustering_age_category","race_eth","obsmnsir","obsmnsil", "obsmnsir_reflex",    
@@ -32,7 +32,7 @@ grouped_vars <- c("clustering_age_category","race_eth","obsmnsir","obsmnsil", "o
                   "obsmnsir_filament","obsmnsil_filament")
 
 id_vars = c("study_id","study","cluster","wave","randdays","age_diff","release_visit","include","earliest")
-#--------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------
 require(survey)
 require(mice)
 
@@ -56,13 +56,6 @@ mi_dfs <- mice(impute_df,
                m=10,maxit=50,seed=500)
 
 saveRDS(mi_dfs, "analysis/dsy03_mi_dfs.RDS")
-#--------------------------------------------------------------------------------
-# source("functions/add_variable_mi.R")
-# 
-# completed_dfs <- mice::complete(mi_dfs, "long") %>%
-#   group_by(.imp) %>%
-#   nest() %>%
-#   mutate(data = map(data, add_variable_mi)) %>%
-#   unnest(data)
+
 
 

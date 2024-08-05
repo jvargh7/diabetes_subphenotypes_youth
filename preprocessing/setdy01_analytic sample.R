@@ -1,5 +1,6 @@
 rm(list=ls()); gc(); source(".Rprofile")
 
+library(anthroplus)
 
 search <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_baseline.RDS")) %>% 
   dplyr::filter(age >= 10,age<20) %>% 
@@ -10,12 +11,14 @@ search <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/sear
                                   TRUE ~ "14-15"),
          dmduration_category = case_when(dmduration <= 5 ~ "<=5 months",
                                          TRUE ~ "6-12 months"))
+
 # participants age: 10–17 y
 today <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_baseline.RDS")) %>% 
   mutate(study = "TODAY", insulin = 0, metformin = 1) %>% 
   dplyr::filter(dmduration == "<=5 months") %>% 
   rename(age_category = age,
-         dmduration_category = dmduration) 
+         dmduration_category = dmduration)
+
 
 # 19
 selected_vars = c("study_id","study","age_category","dmduration_category","race_eth",

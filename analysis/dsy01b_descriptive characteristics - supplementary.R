@@ -150,12 +150,12 @@ write_csv(table_df,"paper/table_descriptive characteristics by study and sex.csv
 ### STable 3 - sex*cluster
 
 table_df = analytic_dataset_cluster %>% 
-  mutate(sex_cluster = case_when(female == 1 & cluster == "OB" ~ "Female_OB",
-                               female == 0 & cluster == "OB" ~ "Male_OB",
-                               female == 1 & cluster == "ID" ~ "Female_ID",
-                               female == 0 & cluster == "ID" ~ "Male_ID",
-                               female == 1 & cluster == "IR" ~ "Female_IR",
-                               female == 0 & cluster == "IR" ~ "Male_IR")) %>% 
+  mutate(sex_cluster = case_when(female == 1 & cluster == "MOD" ~ "Female_OB",
+                               female == 0 & cluster == "MOD" ~ "Male_OB",
+                               female == 1 & cluster == "SIDD" ~ "Female_ID",
+                               female == 0 & cluster == "SIDD" ~ "Male_ID",
+                               female == 1 & cluster == "SIRD" ~ "Female_IR",
+                               female == 0 & cluster == "SIRD" ~ "Male_IR")) %>% 
   bind_rows(.,
             {.} %>% 
               mutate(sex_cluster="Total")) %>% 

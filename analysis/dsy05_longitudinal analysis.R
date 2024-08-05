@@ -15,7 +15,7 @@ survey_mod <- exam_mod <- combined_mod <- list()
 for (i in 1:mi_dfs$m) {
   
   complete_data <- complete(mi_dfs, action = i) %>%
-    mutate(cluster = factor(cluster,levels=c("OB","ID","IR")),
+    mutate(cluster = factor(cluster,levels=c("MOD","SIDD","SIRD")),
            race_eth = factor(race_eth,levels=c("NH White","NH Black","Hispanic","NH Other"))) %>% 
     ### Examination
     mutate(Deformities = case_when(obsmnsir1 == 1 | obsmnsil1 == 1 ~ 1,
@@ -153,9 +153,9 @@ for (i in 1:mi_dfs$m) {
 
 # https://github.com/jvargh7/functions/blob/main/imputation/adjusted_ci.R
 # download.file("https://github.com/jvargh7/functions/blob/main/imputation/adjusted_ci.R",destfile = "")
-source("C:/code/external/functions/imputation/adjusted_ci.R")
+source("functions/adjusted_ci.R")
 # https://github.com/jvargh7/functions/blob/main/imputation/clean_mi_conditionalregression.R
-source("C:/code/external/functions/imputation/clean_mi_conditionalregression.R")
+source("functions/clean_mi_conditionalregression.R")
 
 survey_mod_out = clean_mi_conditionalregression(survey_mod,link="geeglm log")
 exam_mod_out = clean_mi_conditionalregression(exam_mod,link="geeglm log")

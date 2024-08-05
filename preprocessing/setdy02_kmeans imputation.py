@@ -5,9 +5,9 @@ import os
 
 
 if os.getlogin()=="JVARGH7":
-    path_diabetes_subphenotypes_youth_folder = "C:/Cloud/OneDrive - Emory University/Papers/Endotypes in Youth-onset T2DM"
+    path_diabetes_subphenotypes_youth_folder = "C:/Cloud/OneDrive - Emory University/Papers/Subphenotypes in Youth-onset T2DM"
 if os.getlogin()=='JGUO258':
-    path_diabetes_subphenotypes_youth_folder = "C:/Users/JGUO258/OneDrive - Emory/Endotypes in Youth-onset T2DM"
+    path_diabetes_subphenotypes_youth_folder = "C:/Users/JGUO258/OneDrive - Emory/Subphenotypes in Youth-onset T2DM"
 
 
 data_mi = pd.read_csv(path_diabetes_subphenotypes_youth_folder + '/working/cleaned/setdy01a_analytic sample.csv')
@@ -22,7 +22,7 @@ data_mi = data_mi[selected_variables]
 data_mi.shape
 
 ############### Do KNN Imputation with K = 5 by Study Sites #####################
-columns_to_impute = ["bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc"]
+columns_to_impute = ["bmi","hba1c","cpeptidef","sbp","dbp","ldlc","hdlc"]
 
 # Function to impute data for one study site
 def impute_study_data(data, n_neighbors=5):
@@ -55,7 +55,7 @@ imputed_data_merged.to_csv(path_diabetes_subphenotypes_youth_folder + '/working/
 
 
 ## elbow plot - find the optimal # of cluster
-selected_variables = ["bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc"]
+selected_variables = ["bmi","hba1c","cpeptidef","sbp","dbp","ldlc","hdlc"]
 data_to_cluster = imputed_data_merged[selected_variables]
 
 
