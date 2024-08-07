@@ -1,9 +1,9 @@
 rm(list=ls());gc();source(".Rprofile")
 
-# crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy02a_cross sectional df.RDS")) %>% 
+# crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy01a_cross sectional df.RDS")) %>% 
 #   dplyr::select(-"nonna_selfmnsi")
 
-longitudinal_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy02b_longitudinal df.RDS")) %>% 
+longitudinal_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy01b_longitudinal df.RDS")) %>% 
   dplyr::select(-"nonna_selfmnsi") 
 
 
