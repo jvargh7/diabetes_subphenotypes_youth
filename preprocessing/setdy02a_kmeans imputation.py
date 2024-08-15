@@ -14,8 +14,8 @@ data_mi = pd.read_csv(path_diabetes_subphenotypes_youth_folder + '/working/clean
 
 #select variables 
 selected_variables = ["study_id","study","age_category","dmduration_category","race_eth",
-                  "female","bmi","hba1c","cpeptidef","tgl","glucosef","insulinf",
-                  "sbp","dbp","totalc","ldlc","hdlc","insulin","metformin"]
+                      "female","bmi","hba1c","cpeptidef","tgl","glucosef","insulinf",
+                      "sbp","dbp","totalc","ldlc","hdlc","insulin","metformin"]
 
 #drop missing values in the selected variables
 data_mi = data_mi[selected_variables]
@@ -55,7 +55,7 @@ imputed_data_merged.to_csv(path_diabetes_subphenotypes_youth_folder + '/working/
 
 
 ## elbow plot - find the optimal # of cluster
-selected_variables = ["bmi","hba1c","cpeptidef","sbp","dbp","ldlc","hdlc"]
+selected_variables = ["bmi","hba1c","cpeptidef","sbp","dbp","ldlc","hdlc","tgl"]
 data_to_cluster = imputed_data_merged[selected_variables]
 
 
