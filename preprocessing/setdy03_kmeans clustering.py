@@ -70,7 +70,7 @@ analytic_dataset_cluster['cluster'] = kmeans.labels_
 analytic_dataset_cluster.groupby('cluster').mean()
 
 # relabel the cluster labels 
-analytic_dataset_cluster['cluster'] = analytic_dataset_cluster['cluster'].replace({0:'MOD', 1:'SIDD', 2:'SIRD'})
+analytic_dataset_cluster['cluster'] = analytic_dataset_cluster['cluster'].replace({0:'yMOD', 1:'ySIDD', 2:'ySIRD'})
 analytic_dataset_cluster['cluster'].value_counts()
 
 # add study, race, and female back to the dataset
@@ -98,7 +98,7 @@ analytic_dataset_cluster.to_csv(path_diabetes_subphenotypes_youth_folder + '/wor
 data_scaled_cluster = data_scaled.copy()
 data_scaled_cluster['cluster'] = kmeans.labels_
 # relabel the cluster labels
-data_scaled_cluster['cluster'] = data_scaled_cluster['cluster'].replace({0:'MOD', 1:'SIDD', 2:'SIRD'})
+data_scaled_cluster['cluster'] = data_scaled_cluster['cluster'].replace({0:'yMOD', 1:'ySIDD', 2:'ySIRD'})
 
 
 

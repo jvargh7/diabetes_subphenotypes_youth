@@ -15,7 +15,7 @@ survey_mod <- exam_mod <- combined_mod <- list()
 for (i in 1:mi_dfs$m) {
   
   complete_data <- complete(mi_dfs, action = i) %>%
-    mutate(cluster = factor(cluster,levels=c("MOD","SIDD","SIRD")),
+    mutate(cluster = factor(cluster,levels=c("yMOD","ySIDD","ySIRD")),
            race_eth = factor(race_eth,levels=c("NH White","NH Black","Hispanic","NH Other"))) %>% 
     ### Examination
     mutate(Deformities = case_when(obsmnsir1 == 1 | obsmnsil1 == 1 ~ 1,

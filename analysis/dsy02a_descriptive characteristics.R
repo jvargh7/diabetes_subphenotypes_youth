@@ -43,7 +43,7 @@ table_df <- read_csv("analysis/dsy02a_descriptive characteristics - total by clu
   )) %>% 
   dplyr::select(variable,group,cluster,output) %>% 
   pivot_wider(names_from=cluster,values_from=output) %>% 
-  dplyr::select(variable,group,Total,MOD,SIDD,SIRD)
+  dplyr::select(variable,group,Total,yMOD,ySIDD,ySIRD)
 
 write_csv(table_df,"paper/table_descriptive characteristics by cluster.csv")  
 

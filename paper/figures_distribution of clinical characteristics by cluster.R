@@ -3,39 +3,103 @@ rm(list=ls());gc();source(".Rprofile")
 library(ggplot2)
 
 boxplot_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/dsy01a_cross sectional df.RDS")) %>%
-  dplyr::select("cluster", "hba1c", "cpeptidef", "sbp", "dbp", "ldlc", "hdlc", "bmi","totalc") %>% 
-  pivot_longer(
-    cols = c("bmi", "hba1c", "cpeptidef", "sbp", "dbp", "ldlc", "hdlc","totalc"),
-    names_to = "variable",
-    values_to = "value"
-  ) %>% 
-  mutate(variable = factor(variable, levels = c("bmi","hba1c","cpeptidef","totalc",
-                                                "ldlc","hdlc","sbp","dbp")))
+  dplyr::select("study_id","cluster", "hba1c", "cpeptidef", "sbp", "dbp", "ldlc", "hdlc", "bmi","age_category")
 
-variable_labels <- c(
-  cpeptidef = "Fasting C-peptide [ng/mL]",
-  hba1c = "HbA1c [%]",
-  hdlc = "HDL Cholesterol [mg/dL]",
-  ldlc = "LDL Cholesterol [mg/dL]",
-  totalc = "Total Cholesterol [mg/dL]",
-  sbp = "SBP [mmHg]",
-  dbp = "DBP [mmHg]",
-  bmi = "BMI [kg/m²]"
-)
+cluster_colors = c("yMOD"="#F8BDA4","ySIRD"="#A1C3AC","ySIDD"="#ACD9EA")
 
-cluster_colors = c("MOD"="#F8BDA4","SIRD"="#A1C3AC","SIDD"="#ACD9EA")
+fig_A = boxplot_df %>% 
+  ggplot(data=.,aes(x=cluster,y=hba1c,fill=cluster)) +
+  geom_boxplot(position = position_dodge(width=0.9)) +
+  xlab("") +
+  ylab("HbA1c (%)") +
+  scale_y_continuous(limits=c(0,20),breaks=seq(0,20,by=5)) +
+  theme_bw() +
+  scale_fill_manual(name="",values=cluster_colors)
 
-fig_boxplot <- ggplot(boxplot_df, aes(x = cluster, y = value, fill = cluster)) +
-  geom_boxplot(outlier.colour = "black", outlier.shape = 16, outlier.size = 1) +
-  facet_wrap(~variable, scales = "free", labeller = labeller(variable = variable_labels), nrow = 2, ncol = 4) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        strip.text = element_text(size = 10, face = "bold"),
-        plot.title = element_text(size = 16, face = "bold"),
-        legend.position = "bottom") +
-  labs(x = NULL, y = NULL, title = "Distribution of Clinical Characteristics by Subphenotypes", fill = "Subphenotype") +
-  scale_fill_manual(values = cluster_colors) 
+fig_B = boxplot_df %>% 
+  ggplot(data=.,aes(x=cluster,y=bmi,fill=cluster)) +
+  geom_boxplot(position = position_dodge(width=0.9)) +
+  xlab("") +
+  ylab(bquote('BMI ( kg' /m^2~')')) +
+  scale_y_continuous(limits=c(0,60),breaks=seq(0,60,by=10)) +
+  theme_bw() +
+  scale_fill_manual(name="",values=cluster_colors)
 
-fig_boxplot %>% 
-  ggsave(plot = ., filename = paste0(path_diabetes_subphenotypes_youth_folder,"/figures/distribution of clinicalcharacteristics by cluster.jpg"),width = 9, height = 5.5)
+fig_C = boxplot_df %>% 
+  ggplot(data=.,aes(x=cluster,y=cpeptidef,fill=cluster)) +
+  geom_boxplot(position = position_dodge(width=0.9)) +
+  xlab("") +
+  ylab("Fasting C-peptide (ng/mL)") +
+  scale_y_continuous(limits=c(0,15),breaks=seq(0,15,by=5)) +
+  theme_bw() +
+  scale_fill_manual(name="",values=cluster_colors)
 
+
+age_data <- boxplot_df %>%
+  group_by(age_category) %>%
+  summarise(count = n_distinct(study_id)) %>% 
+  ungroup()
+
+age_colors = c("<=13"="#F8BDA4","14-15"="#A1C3AC",">15"="#ACD9EA")
+
+fig_D = age_data %>%
+  ggplot(data=.,aes(x=age_category,y=count,fill=age_category)) +
+  geom_col(position = position_dodge(width=0.9),color = "black") +
+  xlab("") +
+  ylab("Age Category") +
+  theme_bw() +
+  scale_fill_manual(name="",values=age_colors)
+
+
+fig_E = boxplot_df %>% 
+  ggplot(data=.,aes(x=cluster,y=ldlc,fill=cluster)) +
+  geom_boxplot(position = position_dodge(width=0.9)) +
+  xlab("") +
+  ylab("LDL Cholesterol (mg/dL)") +
+  scale_y_continuous(limits=c(0,250),breaks=seq(0,250,by=50)) +
+  theme_bw() +
+  scale_fill_manual(name="",values=cluster_colors)
+
+fig_F = boxplot_df %>% 
+  ggplot(data=.,aes(x=cluster,y=hdlc,fill=cluster)) +
+  geom_boxplot(position = position_dodge(width=0.9)) +
+  xlab("") +
+  ylab("HDL Cholesterol (mg/dL)") +
+  scale_y_continuous(limits=c(0,100),breaks=seq(0,100,by=20)) +
+  theme_bw() +
+  scale_fill_manual(name="",values=cluster_colors)
+
+fig_G = boxplot_df %>% 
+  ggplot(data=.,aes(x=cluster,y=sbp,fill=cluster)) +
+  geom_boxplot(position = position_dodge(width=0.9)) +
+  xlab("") +
+  ylab("SBP (mmHg)") +
+  scale_y_continuous(limits=c(0,200),breaks=seq(0,200,by=50)) +
+  theme_bw() +
+  scale_fill_manual(name="",values=cluster_colors)
+
+fig_H = boxplot_df %>% 
+  ggplot(data=.,aes(x=cluster,y=dbp,fill=cluster)) +
+  geom_boxplot(position = position_dodge(width=0.9)) +
+  xlab("") +
+  ylab("DBP (mmHg)") +
+  scale_y_continuous(limits=c(0,120),breaks=seq(0,120,by=20)) +
+  theme_bw() +
+  scale_fill_manual(name="",values=cluster_colors)
+
+
+
+library(ggpubr)
+
+ggarrange(fig_A,
+          fig_B,
+          fig_C,
+          fig_D,
+          fig_E,
+          fig_F,
+          fig_G,
+          fig_H,
+          nrow=2,
+          ncol=4,
+          common.legend = TRUE,legend = "none") %>% 
+  ggsave(.,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/distribution of clinicalcharacteristics by cluster.jpg"),width=12,height =5.5)

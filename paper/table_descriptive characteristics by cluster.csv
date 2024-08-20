@@ -1,4 +1,4 @@
-variable,group,Total,MOD,SIDD,SIRD
+variable,group,Total,yMOD,ySIDD,ySIRD
 bmi,NA,32.8 (7.8),33.3 (4.3),24 (6.1),38.5 (7.2)
 hba1c,NA,"6.1 (5.6, 7.1)","5.8 (5.4, 6.3)","7.3 (6.3, 8.5)","6.2 (5.8, 7.3)"
 cpeptidef,NA,3.5 (2),3.5 (1.5),1.5 (1),5 (1.8)
@@ -13,10 +13,10 @@ glucosef,NA,106.5 (21.3),102.3 (18.3),124.8 (28.8),114 (23.7)
 female,NA,722 (56.5%),338 (62.4%),160 (47.5%),224 (54%)
 insulin,NA,719 (31.4%),337 (13.6%),159 (77.4%),223 (25.6%)
 metformin,NA,719 (74.5%),337 (88.4%),159 (30.2%),223 (85.2%)
-cluster,MOD,NA,NA,NA,NA
-cluster,SIDD,NA,NA,NA,NA
-cluster,SIRD,NA,NA,NA,NA
 cluster,Total,NA,NA,NA,NA
+cluster,yMOD,NA,NA,NA,NA
+cluster,ySIDD,NA,NA,NA,NA
+cluster,ySIRD,NA,NA,NA,NA
 study,SEARCH,385 (53.3%),108 (32%),146 (91.2%),131 (58.5%)
 study,TODAY,337 (46.7%),230 (68%),14 (8.8%),93 (41.5%)
 dmduration_category,<=5 months,722 (100%),338 (100%),160 (100%),224 (100%)

@@ -64,7 +64,7 @@ table_df = source_df %>%
               mutate(study_cca="Total")) %>% 
   table1_summary(.,c_vars = c_vars,p_vars = p_vars,g_vars = g_vars,id_vars = "study_cca")
 
-write_csv(table_df,"analysis/dsy02a_descriptive characteristics - total by study and cca.csv")
+write_csv(table_df,"analysis/dsy02b_descriptive characteristics - total by study and cca.csv")
 
 
 
@@ -74,7 +74,7 @@ mean_vars = c("bmi","cpeptidef", "sbp","dbp","ldlc","hdlc","totalc","insulinf","
 
 median_vars = c("hba1c")
 
-table_df <- read_csv("analysis/dsy02a_descriptive characteristics - total by study and cca.csv") %>% 
+table_df <- read_csv("analysis/dsy02b_descriptive characteristics - total by study and cca.csv") %>% 
   dplyr::mutate(selected_rows = case_when(variable %in% mean_vars & est %in% c("mean","sd") ~ 1,
                                           variable %in% median_vars & est %in% c("median","q25","q75") ~ 1,
                                           !variable %in% c(mean_vars,median_vars) ~ 1,
@@ -145,18 +145,18 @@ write_csv(table_df,"paper/table_descriptive characteristics by study and sex.csv
 ### STable 3 - sex*cluster
 
 table_df = analytic_dataset_cluster %>% 
-  mutate(sex_cluster = case_when(female == 1 & cluster == "MOD" ~ "Female_MOD",
-                               female == 0 & cluster == "MOD" ~ "Male_MOD",
-                               female == 1 & cluster == "SIDD" ~ "Female_SIDD",
-                               female == 0 & cluster == "SIDD" ~ "Male_SIDD",
-                               female == 1 & cluster == "SIRD" ~ "Female_SIRD",
-                               female == 0 & cluster == "SIRD" ~ "Male_SIRD")) %>% 
+  mutate(sex_cluster = case_when(female == 1 & cluster == "yMOD" ~ "Female_yMOD",
+                               female == 0 & cluster == "yMOD" ~ "Male_yMOD",
+                               female == 1 & cluster == "ySIDD" ~ "Female_ySIDD",
+                               female == 0 & cluster == "ySIDD" ~ "Male_ySIDD",
+                               female == 1 & cluster == "ySIRD" ~ "Female_ySIRD",
+                               female == 0 & cluster == "ySIRD" ~ "Male_ySIRD")) %>% 
   bind_rows(.,
             {.} %>% 
               mutate(sex_cluster="Total")) %>% 
   table1_summary(.,c_vars = c_vars,p_vars = p_vars,g_vars = g_vars,id_vars = "sex_cluster")
 
-write_csv(table_df,"analysis/dsy01b_descriptive characteristics - total by sex and cluster.csv")
+write_csv(table_df,"analysis/dsy02b_descriptive characteristics - total by sex and cluster.csv")
 
 
 ### Table 1 by clusters
@@ -165,7 +165,7 @@ mean_vars = c("bmi","cpeptidef", "sbp","dbp","ldlc","hdlc","totalc","insulinf","
 
 median_vars = c("hba1c")
 
-table_df <- read_csv("analysis/dsy01b_descriptive characteristics - total by sex and cluster.csv") %>% 
+table_df <- read_csv("analysis/dsy02b_descriptive characteristics - total by sex and cluster.csv") %>% 
   dplyr::mutate(selected_rows = case_when(variable %in% mean_vars & est %in% c("mean","sd") ~ 1,
                                           variable %in% median_vars & est %in% c("median","q25","q75") ~ 1,
                                           !variable %in% c(mean_vars,median_vars) ~ 1,
@@ -180,7 +180,7 @@ table_df <- read_csv("analysis/dsy01b_descriptive characteristics - total by sex
   )) %>% 
   dplyr::select(variable,group,sex_cluster,output) %>% 
   pivot_wider(names_from=sex_cluster,values_from=output) %>% 
-  dplyr::select(variable,group,Total,Female_MOD,Male_MOD,Female_SIDD,Male_SIDD,Female_SIRD,Male_SIRD)
+  dplyr::select(variable,group,Total,Female_yMOD,Male_yMOD,Female_ySIDD,Male_ySIDD,Female_ySIRD,Male_ySIRD)
 
 write_csv(table_df,"paper/table_descriptive characteristics by sex and cluster.csv")  
 

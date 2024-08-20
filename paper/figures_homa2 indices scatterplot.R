@@ -2,7 +2,7 @@ rm(list=ls());gc();source(".Rprofile")
 
 library(ggplot2)
 library(readxl)
-
+library(ggpubr)
 homa2_df <- read_excel("analysis/HOMA2Calculator.xlsm", sheet = "Insulin") %>% 
   slice(1:337) %>% 
   rename(homa2b = `HOMA2 %B`, homa2ir = `HOMA2 IR`) %>%  
@@ -39,7 +39,9 @@ ir_ratio_plot <- ggplot(fig_df, aes(x = tglhdl_ratio, y = homa2ir)) +
     x = "Triglycerides/HDL Cholestrol Ratio",
     y = "HOMA2-IR"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  stat_cor()
+
 
 b_cpep_plot <- ggplot(fig_df, aes(x = cpeptidef, y = homa2b)) +
   geom_point(alpha = 0.6, color = "blue") +  
@@ -48,7 +50,8 @@ b_cpep_plot <- ggplot(fig_df, aes(x = cpeptidef, y = homa2b)) +
     x = "Fasting C-peptide (ng/mL)",
     y = "HOMA2-B"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  stat_cor()
 
 library(patchwork)
 

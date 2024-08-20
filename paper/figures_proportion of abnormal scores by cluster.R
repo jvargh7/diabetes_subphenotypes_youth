@@ -23,7 +23,7 @@ proportions <- crosssec_df %>%
          uci = proportion + 1.96 * se) %>% 
   mutate(across(c("proportion", "se", "lci", "uci"), ~ . * 100))
 
-proportions$cluster <- factor(proportions$cluster, levels = c("MOD", "SIDD", "SIRD"))
+proportions$cluster <- factor(proportions$cluster, levels = c("yMOD", "ySIDD", "ySIRD"))
 
 
 fig_prop <- ggplot(proportions, aes(x = cluster, y = proportion, fill = abnormal_type)) +
