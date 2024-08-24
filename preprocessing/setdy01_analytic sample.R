@@ -41,3 +41,4 @@ complete_cases_df <- source_df %>%
   dplyr::filter(complete.cases(.)) # N = 335
 
 write.csv(complete_cases_df, paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/setdy01b_complete cases.csv"))
+
