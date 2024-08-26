@@ -35,20 +35,23 @@ fig_C = boxplot_df %>%
   scale_fill_manual(name="",values=cluster_colors)
 
 
-age_data <- boxplot_df %>%
-  group_by(age_category) %>%
-  summarise(count = n_distinct(study_id)) %>% 
-  ungroup()
+age_data <- data.frame(
+  cluster = c('yMOD', 'ySIDD', 'ySIRD', 'yMOD', 'ySIDD', 'ySIRD', 'yMOD', 'ySIDD', 'ySIRD'),
+  age_category = c('≤13', '≤13', '≤13', '14-15', '14-15', '14-15', '>15', '>15', '>15'),
+  percentage = c(39.1, 46.9, 38.8, 22.2, 20.0, 22.3, 38.8, 33.1, 38.8)
+)
 
-age_colors = c("<=13"="#F8BDA4","14-15"="#A1C3AC",">15"="#ACD9EA")
+age_data$age_category <- factor(age_data$age_category, levels = c("≤13", "14-15", ">15"))
+
+age_colors = c("≤13"="#F8BDA4","14-15"="#A1C3AC",">15"="#ACD9EA")
 
 fig_D = age_data %>%
-  ggplot(data=.,aes(x=age_category,y=count,fill=age_category)) +
+  ggplot(data=., aes(x=age_category, y=percentage, fill=cluster)) +
   geom_col(position = position_dodge(width=0.9),color = "black") +
   xlab("") +
-  ylab("Age Category") +
+  ylab("Percentage (%)") +
   theme_bw() +
-  scale_fill_manual(name="",values=age_colors)
+  scale_fill_manual(name="",values=cluster_colors)
 
 
 fig_E = boxplot_df %>% 
