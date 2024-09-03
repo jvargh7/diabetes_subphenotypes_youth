@@ -1,14 +1,13 @@
 rm(list=ls());gc();source(".Rprofile")
 
 
+
 (table_df <- read_csv("prov/analysis/dsy04_cross-sectional coefficients.csv") %>% 
-  dplyr::select(iv,outcome,OR) %>% 
-  pivot_wider(names_from = c(outcome),values_from=OR)) %>% 
-  write_csv(.,"paper/table_cross-sectional poisson regression coefficients.csv")
-
-
-
-(table_longitudinal_df <- read_csv("prov/analysis/dsy05_longitudinal coefficients.csv") %>% 
-    dplyr::select(iv,outcome,OR) %>% 
-    pivot_wider(names_from = c(outcome),values_from=OR)) %>% 
-  write_csv(.,"prov/paper/table_longitudinal poisson regression coefficients.csv")
+    mutate(lci = estimate - 1.96*std.error,
+           uci = estimate + 1.96*std.error) %>% 
+    mutate(OR_CI = paste0(round(exp(estimate),2)," (",
+                          round(exp(lci),2),", ",
+                          round(exp(uci),2),")")) %>% 
+    dplyr::select(term,OR_CI,outcome) %>%
+    pivot_wider(names_from = c(outcome),values_from=OR_CI)) %>% 
+  write_csv(.,"prov/paper/table_cross-sectional poisson regression coefficients.csv")

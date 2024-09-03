@@ -26,3 +26,4 @@ today_mnsi = bind_rows(neuro_today %>% mutate(dataset = "TODAY"),
                                                                                  TRUE ~ NA_character_)) 
 
 saveRDS(today_mnsi,paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_mnsi.RDS"))
+today_mnsi <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_mnsi.RDS"))
