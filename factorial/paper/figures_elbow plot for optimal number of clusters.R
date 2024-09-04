@@ -36,5 +36,5 @@ theme_minimal() +  # Use a minimal theme
     panel.background = element_rect(fill = "white", colour = "white")
   )
 
-ggsave(elbow_plot,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/factorial//elbow plot for optimal number of clusters.png"),width=6, height = 4)
+ggsave(elbow_plot,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/factorial/elbow plot for optimal number of clusters.png"),width=6, height = 4)
 

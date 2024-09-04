@@ -10,4 +10,4 @@ rm(list=ls());gc();source(".Rprofile")
                           round(exp(uci),2),")")) %>% 
     dplyr::select(term,OR_CI,outcome) %>%
     pivot_wider(names_from = c(outcome),values_from=OR_CI)) %>% 
-  write_csv(.,"prov/paper/table_cross-sectional poisson regression coefficients.csv")
+  write_csv(.,"prov/paper/table_cross-sectional poisson regression coefficients main clusters.csv")
