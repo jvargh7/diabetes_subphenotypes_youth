@@ -3,7 +3,7 @@ rm(list=ls());gc();source(".Rprofile")
 library(stringr)
 
 
-combined_tab <- read_csv("paper/table_cross-sectional poisson regression coefficients by subsets.csv") %>% 
+combined_tab <- read_csv("paper/table_neuropathy cross-sectional poisson regression coefficients by subsets.csv") %>% 
   mutate(term = str_replace(term, "cluster", ""))
 
 combined_long <- combined_tab %>%
@@ -34,5 +34,5 @@ forest_plot <- ggplot(combined_long, aes(x = estimate, y = subset, color = term,
     panel.grid.minor.x = element_blank()
   ) 
   
-ggsave(forest_plot,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/forest plot of prevalence ratio by subset.jpg"),width=12,height =5.5)
+ggsave(forest_plot,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/forest plot of neuropathy prevalence ratio by subset.jpg"),width=12,height =5.5)
 

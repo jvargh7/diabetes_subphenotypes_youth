@@ -44,5 +44,5 @@ mi_dfs <- mice(impute_df, method = imputation_method, m = 1, maxit = 50, seed = 
 
 #mi_analytic_df <- complete(mi_dfs, 1)
 
-saveRDS(mi_dfs, "prov/analysis/dsy03_mi_dfs.RDS")
+saveRDS(mi_dfs, "prov/analysis/dsy03_neuropathy mi_dfs.RDS")
 

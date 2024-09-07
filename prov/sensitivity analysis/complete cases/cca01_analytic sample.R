@@ -156,4 +156,3 @@ crosssec_df_cca <-  analytic_df %>%
 
 saveRDS(crosssec_df_cca,paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/prov/complete cases/cca01_cross sectional complete cases df.RDS"))
 
-

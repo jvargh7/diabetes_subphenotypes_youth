@@ -23,7 +23,9 @@ today <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today
 # 19
 selected_vars = c("study_id","study","age_category","dmduration_category","race_eth",
                   "female","bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc",
-                  "tgl","glucosef","insulinf","totalc","insulin","metformin")
+                  "tgl","glucosef","insulinf","totalc","insulin","metformin",
+                  "retinopathy_lefteye","retinopathy_righteye","retinopathy","retinopathy_tx",
+                  "dkd","nephropathy_prescription","nephropathy_tx","nephropathy_diag")
 
 
 source_df = bind_rows(search %>% dplyr::select(one_of(selected_vars)),

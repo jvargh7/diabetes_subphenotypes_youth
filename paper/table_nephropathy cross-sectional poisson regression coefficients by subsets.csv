@@ -1,0 +1,7 @@
+term,nephropathy_abnormal,subset
+clusterySIDD,"1.46 (0.33, 6.51)",etiologic search only
+clusterySIRD,"1.58 (0.38, 6.46)",etiologic search only
+clusterySIDD,"0.47 (0.03, 6.42)",factorial search only
+clusterySIRD,"1.85 (0.36, 9.49)",factorial search only
+clusterySIDD,"1.23 (0.19, 7.97)",prov search only
+clusterySIRD,"2.86 (0.61, 13.49)",prov search only

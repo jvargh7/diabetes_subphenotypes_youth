@@ -1,6 +1,5 @@
 rm(list=ls()); gc(); source(".Rprofile")
 
-library(haven)
 
 analytic_df = read_csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/prov/search only/sepre02_knn imputation.csv'))
 
@@ -22,4 +21,3 @@ analytic_dataset <- analytic_df %>%
          hdlc_residual = residuals(hdlc_mod))
 
 write.csv(analytic_dataset, paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/prov/search only/sepre03_knn imputation add residuals.csv"))
-

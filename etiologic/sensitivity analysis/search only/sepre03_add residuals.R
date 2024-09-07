@@ -1,6 +1,5 @@
 rm(list=ls()); gc(); source(".Rprofile")
 
-library(haven)
 
 analytic_df = read_csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/etiologic/search only/sepre02_knn imputation.csv'))
 

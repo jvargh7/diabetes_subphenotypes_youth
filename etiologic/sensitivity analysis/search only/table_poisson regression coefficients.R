@@ -10,5 +10,3 @@ rm(list=ls());gc();source(".Rprofile")
   dplyr::select(term,OR_CI,outcome) %>%
   pivot_wider(names_from = c(outcome),values_from=OR_CI)) %>% 
   write_csv(.,"etiologic/sensitivity analysis/search only/table_cross-sectional poisson regression coefficients search only.csv")
-
-

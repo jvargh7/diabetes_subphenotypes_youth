@@ -1,9 +1,9 @@
 rm(list=ls());gc();source(".Rprofile")
 
-mi_dfs <- readRDS("prov/analysis/dsy03_mi_dfs.RDS") 
+mi_dfs <- readRDS("factorial/analysis/dsy03_neuropathy mi_dfs.RDS") 
 
 # Loss to follow-up weights
-crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/prov/dsy01_cross sectional df.RDS")) %>% 
+crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/factorial/dsy01_cross sectional df.RDS")) %>% 
   dplyr::select(-"nonna_selfmnsi") %>% 
   mutate(cs_available = case_when(is.na(combined_abnormal) ~ 0,
                                   TRUE ~ 1))
@@ -128,4 +128,4 @@ bind_rows(
   combined_mod_out %>% mutate(outcome = "combined_abnormal")
    
 ) %>% 
-  write_csv(.,"prov/analysis/dsy04_cross-sectional coefficients.csv")
+  write_csv(.,"factorial/analysis/dsy04_neuropathy cross-sectional coefficients.csv")

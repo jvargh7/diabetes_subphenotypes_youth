@@ -38,7 +38,6 @@ tgl = analytic_dataset['tgl']
 glucosef = analytic_dataset['glucosef']
 
 
-
 analytic_dataset = analytic_dataset.drop(columns = ['study_id', 'study', 'age_category', 'dmduration_category', 'race_eth',
                                                   'female', 'tgl', 'glucosef', 'insulinf','totalc', 'insulin', 'metformin'])
 analytic_dataset.shape
@@ -86,6 +85,7 @@ analytic_dataset_cluster['insulinf'] = insulinf
 analytic_dataset_cluster['metformin'] = metformin
 analytic_dataset_cluster['tgl'] = tgl
 analytic_dataset_cluster['glucosef'] = glucosef
+
 
 analytic_dataset_cluster['cluster'].value_counts()
 analytic_dataset_cluster.to_csv(path_diabetes_subphenotypes_youth_folder + '/working/cleaned/etiologic/search only/sepre04_kmeans clustering.csv', index=False)

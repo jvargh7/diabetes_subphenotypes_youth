@@ -1,6 +1,6 @@
 rm(list=ls());gc();source(".Rprofile")
 
-crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/dsy01_cross sectional df.RDS")) %>% 
+crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/factorial/dsy01_cross sectional df.RDS")) %>% 
   dplyr::select(-"nonna_selfmnsi")
 
 
@@ -44,5 +44,5 @@ mi_dfs <- mice(impute_df, method = imputation_method, m = 1, maxit = 50, seed = 
 
 #mi_analytic_df <- complete(mi_dfs, 1)
 
-saveRDS(mi_dfs, "etiologic/analysis/dsy03_mi_dfs.RDS")
+saveRDS(mi_dfs, "factorial/analysis/dsy03_neuropathy mi_dfs.RDS")
 

@@ -2,7 +2,7 @@ rm(list=ls()); gc(); source(".Rprofile")
 
 # library(anthroplus)
 
-search <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_etiologic.RDS")) %>% 
+search <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_factorial.RDS")) %>% 
   dplyr::filter(age >= 10,age<20) %>% 
   dplyr::filter(dmduration >= 0 & dmduration <= duration_cutoff) %>% 
   mutate(study_id = as.character(study_id),study = "SEARCH",insulinf=NA) %>% 
@@ -20,7 +20,7 @@ selected_vars = c("study_id","study","age_category","dmduration_category","race_
 
 source_df = search %>% dplyr::select(one_of(selected_vars))
 
-#write.csv(source_df, paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/setdy01c_source sample.csv"))
+#write.csv(source_df, paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/factorial/setdy01c_source sample.csv"))
 
 analytic_df = source_df %>% 
     dplyr::filter(!is.na(hba1c) | !is.na(cpeptidef) | !is.na(totalc) | !is.na(ldlc) | !is.na(hdlc))
@@ -31,5 +31,5 @@ complete_cases_df <- source_df %>%
   dplyr::select(-c("insulinf","glucosef")) %>% 
   dplyr::filter(complete.cases(.)) # N = 335
 
-#write.csv(complete_cases_df, paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/setdy01b_complete cases.csv"))
+#write.csv(complete_cases_df, paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/factorial/setdy01b_complete cases.csv"))
 
