@@ -93,3 +93,26 @@ table_df <- read_csv("etiologic/analysis/dsy02_descriptive characteristics - tot
   dplyr::select(variable,group,Total,Female_yMOD,Male_yMOD,Female_ySIDD,Male_ySIDD,Female_ySIRD,Male_ySIRD)
 
 write_csv(table_df,"etiologic/paper/table_descriptive characteristics by sex and cluster.csv")  
+
+
+#-----------------------------------------------------------------------------------------------------------
+### STable 4 - study
+
+table_df <- read_csv("etiologic/analysis/dsy02_descriptive characteristics - total by study.csv") %>% 
+  dplyr::mutate(selected_rows = case_when(variable %in% mean_vars & est %in% c("mean","sd") ~ 1,
+                                          variable %in% median_vars & est %in% c("median","q25","q75") ~ 1,
+                                          !variable %in% c(mean_vars,median_vars) ~ 1,
+                                          TRUE ~ 0
+  )) %>% 
+  dplyr::filter(selected_rows == 1) %>% 
+  dplyr::select(study,group,variable,est,value) %>% 
+  pivot_wider(names_from=est,values_from=value) %>% 
+  mutate(output = case_when(variable %in% mean_vars ~ paste0(round(mean,1)," (",round(sd,1),")"),
+                            variable %in% median_vars ~ paste0(round(median,1)," (",round(q25,1),", ",round(q75,1),")"),
+                            TRUE ~ paste0(round(freq,0)," (",round(proportion,1),"%)")
+  )) %>% 
+  dplyr::select(variable,group,study,output) %>% 
+  pivot_wider(names_from=study,values_from=output) %>% 
+  dplyr::select(variable,group,Total,SEARCH,TODAY)
+
+write_csv(table_df,"etiologic/paper/table_descriptive characteristics by study.csv")  

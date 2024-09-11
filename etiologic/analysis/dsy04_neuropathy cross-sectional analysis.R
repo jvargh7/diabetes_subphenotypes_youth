@@ -14,7 +14,7 @@ cs_available_mod <- glm(cs_available ~ cluster + age_category + female + race_et
 crosssec_df$ltfu_prob = predict(cs_available_mod,newdata=crosssec_df,type="response")
 crosssec_df$ltfu_weight = 1/crosssec_df$ltfu_prob
 
-
+library(mice)
 library(geepack)
 library(stringr)
   
@@ -88,44 +88,74 @@ library(stringr)
                                 TRUE ~ study_id)) %>% 
     mutate(study_id = as.numeric(study_id))
     
+
   
-  survey_mod <- geeglm(survey_abnormal ~ cluster + age_category + female + race_eth, 
+# Adjusted -----------------------------------------------------------------------------------------------------
+  
+  survey_mod <- geeglm(survey_abnormal ~ cluster + age_category + female + race_eth + study, 
                             data = completed_data, 
                             family = poisson(link = "log"), 
-                            # This is incorrect - we are not trying to cluster on the cluster! This is the clustering for repeated measures!
-                            id = study_id,
                             weights = ltfu_weight, 
                             corstr = "independence")
-  exam_mod <- geeglm(exam_abnormal ~ cluster + age_category + female + race_eth, 
+  exam_mod <- geeglm(exam_abnormal ~ cluster + age_category + female + race_eth + study, 
                           data = completed_data, 
                           family = poisson(link = "log"), 
-                          # This is incorrect - we are not trying to cluster on the cluster! This is the clustering for repeated measures!
                           id = study_id,
                           weights = ltfu_weight, 
                           corstr = "independence")
-  combined_mod <- geeglm(combined_abnormal ~ cluster + age_category + female + race_eth, 
+  combined_mod <- geeglm(combined_abnormal ~ cluster + age_category + female + race_eth + study, 
                               data = completed_data, 
                               family = poisson(link = "log"), 
-                              # This is incorrect - we are not trying to cluster on the cluster! This is the clustering for repeated measures!
                               id = study_id,
                               weights = ltfu_weight, 
                               corstr = "independence")
 
 
 
-
-
-
 survey_mod_out = broom::tidy(survey_mod)  
 exam_mod_out = broom::tidy(exam_mod)  
 combined_mod_out = broom::tidy(combined_mod)  
-  
+
+
+
+# Unadjusted -----------------------------------------------------------------------------------------------------
+
+survey_unmod <- geeglm(survey_abnormal ~ cluster, 
+                     data = completed_data, 
+                     family = poisson(link = "log"), 
+                     id = study_id,
+                     weights = ltfu_weight, 
+                     corstr = "independence")
+exam_unmod <- geeglm(exam_abnormal ~ cluster, 
+                   data = completed_data, 
+                   family = poisson(link = "log"), 
+                   id = study_id,
+                   weights = ltfu_weight, 
+                   corstr = "independence")
+combined_unmod <- geeglm(combined_abnormal ~ cluster, 
+                       data = completed_data, 
+                       family = poisson(link = "log"), 
+                       id = study_id,
+                       weights = ltfu_weight, 
+                       corstr = "independence")
+
+
+
+survey_unmod_out = broom::tidy(survey_unmod)  
+exam_unmod_out = broom::tidy(exam_unmod)  
+combined_unmod_out = broom::tidy(combined_unmod)  
+
+
+
 
 bind_rows(
- 
   survey_mod_out %>% mutate(outcome = "survey_abnormal"),
   exam_mod_out %>% mutate(outcome = "exam_abnormal"),
-  combined_mod_out %>% mutate(outcome = "combined_abnormal")
-   
+  combined_mod_out %>% mutate(outcome = "combined_abnormal"),
+  
+  survey_unmod_out %>% mutate(outcome = "unadjusted survey_abnormal"),
+  exam_unmod_out %>% mutate(outcome = "unadjusted exam_abnormal"),
+  combined_unmod_out %>% mutate(outcome = "unadjusted combined_abnormal")
+  
 ) %>% 
   write_csv(.,"etiologic/analysis/dsy04_neuropathy cross-sectional coefficients.csv")

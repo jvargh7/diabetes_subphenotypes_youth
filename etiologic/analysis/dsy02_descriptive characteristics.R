@@ -6,13 +6,12 @@ source_df <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder,"/working/
 
 source("functions/table1_summary.R")
 
-
-#-----------------------------------------------------------------------------------------------------------
-### Table 1 by clusters
-
 c_vars = c("bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc","totalc","insulinf","tgl","glucosef")
 p_vars = c("female","insulin","metformin")
 g_vars = c("cluster","study","dmduration_category","age_category","race_eth")
+
+#-----------------------------------------------------------------------------------------------------------
+### Table 1 by clusters
 
 table_df = analytic_df %>% 
   bind_rows(.,
@@ -76,3 +75,14 @@ table_df = analytic_df %>%
   table1_summary(.,c_vars = c_vars,p_vars = p_vars,g_vars = g_vars,id_vars = "sex_cluster")
 
 write_csv(table_df,"etiologic/analysis/dsy02_descriptive characteristics - total by sex and cluster.csv")
+
+#-----------------------------------------------------------------------------------------------------------
+### STable 4 - study
+
+table_df = analytic_df %>% 
+  bind_rows(.,
+            {.} %>% 
+              mutate(study="Total")) %>% 
+  table1_summary(.,c_vars = c_vars,p_vars = p_vars,g_vars = g_vars,id_vars = "study")
+
+write_csv(table_df,"etiologic/analysis/dsy02_descriptive characteristics - total by study.csv")
