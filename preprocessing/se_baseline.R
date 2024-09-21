@@ -26,7 +26,8 @@ etiologic <- search1to3 %>% mutate(wave = "SEARCH 1 TO 3") %>%
   dplyr::filter(age == min(age)) %>% 
   dplyr::filter(!is.na(bmi)) %>% 
   ungroup() %>% 
-  mutate(dmduration = dmduration/12)
+  mutate(dmduration = dmduration/12) %>% 
+  mutate(retinopathy = if_else(is.na(retinopathy_lefteye) & is.na(retinopathy_righteye), 0, 1))
 
 saveRDS(etiologic,paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_etiologic.RDS"))
 

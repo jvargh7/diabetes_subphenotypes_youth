@@ -4,10 +4,17 @@ library(stringr)
 
 
 combined_tab <- read_csv("paper/table_neuropathy cross-sectional poisson regression coefficients by subsets.csv") %>% 
-  mutate(term = str_replace(term, "cluster", ""))
+  mutate(term = str_replace(term, "cluster", "")) %>% 
+  mutate(subset = str_replace_all(subset, "prov", "provider")) %>% 
+  rename(
+    `Abnormal Examination Score` = exam_abnormal,
+    `Abnormal Questionnaire Score` = survey_abnormal,
+    `Abnormal Combined Score` = combined_abnormal
+  ) %>%
+  dplyr::select(subset, term, `Abnormal Examination Score`, `Abnormal Questionnaire Score`, `Abnormal Combined Score`)
 
 combined_long <- combined_tab %>%
-  pivot_longer(cols = c(survey_abnormal, exam_abnormal, combined_abnormal),
+  pivot_longer(cols = starts_with("Abnormal"),
                names_to = "abnormal_type",
                values_to = "estimate_ci") %>%
   separate(estimate_ci, into = c("estimate", "ci_low", "ci_high"), sep = "\\(|, |\\)") %>%
@@ -15,7 +22,10 @@ combined_long <- combined_tab %>%
    mutate(subset = factor(subset, levels = c(
     "etiologic main clusters", "etiologic complete cases", "etiologic search only",
     "factorial main clusters", "factorial complete cases", "factorial search only",
-    "prov main clusters", "prov complete cases", "prov search only"
+    "provider main clusters", "provider complete cases", "provider search only"
+  ))) %>% 
+  mutate(abnormal_type = factor(abnormal_type, levels = c(
+    "Abnormal Examination Score", "Abnormal Questionnaire Score", "Abnormal Combined Score"
   )))
 
 

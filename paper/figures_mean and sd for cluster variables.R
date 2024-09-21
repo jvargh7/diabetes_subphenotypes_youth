@@ -73,7 +73,8 @@ long_data <- combined_summary %>%
     cols = c(bmi, hba1c, cpeptidef, sbp, dbp, ldlc, hdlc), # Names of measurements
     names_to = "variable",
     values_to = "value"
-  )
+  ) %>% 
+  mutate(subset = str_replace_all(subset, "prov", "provider"))
 
 
 fig <- ggplot(long_data, aes(x = cluster, y = value, shape = subset, color = group)) +
