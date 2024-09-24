@@ -7,11 +7,8 @@ rm(list=ls());gc();source(".Rprofile")
 # combined score: survey >=4 / exam >= 2.5
 #--------------------------------------------------------------------------------------
 
-mnsi <- bind_rows(readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_mnsi.RDS")) %>% 
-  mutate(study_id = as.character(study_id), study = "SEARCH"),
-  readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_mnsi.RDS")) %>% 
-    mutate(study = "TODAY", selfmnsi15 = 0) %>% 
-    rename(wave = dataset)) %>%
+mnsi <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_mnsi.RDS")) %>% 
+  mutate(study_id = as.character(study_id), study = "SEARCH") %>%
   dplyr::select(-obsmnsir5,-obsmnsil5) %>% 
   ### Questionnaire
   mutate(across(c(selfmnsi1:selfmnsi3, selfmnsi5:selfmnsi6, selfmnsi8:selfmnsi9, selfmnsi11:selfmnsi12, selfmnsi14:selfmnsi15), 
@@ -135,7 +132,8 @@ mnsi <- bind_rows(readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/work
 
 
 
-analytic_df <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/prov/search only/sepre04_kmeans clustering.csv')) 
+analytic_df <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/prov/setdy04_kmeans clustering.csv')) %>% 
+  dplyr::filter(study == "SEARCH")
 
 
 crosssec_df <-  analytic_df %>% 
@@ -143,11 +141,8 @@ crosssec_df <-  analytic_df %>%
   left_join(
     mnsi %>% 
       group_by(study,study_id) %>%
-      mutate(include = case_when(study == "SEARCH" & age == min(age) ~ 1,
-                                 study == "TODAY" & randdays == min(randdays) & randdays %in% c(0:365)  ~ 1,
-                                 TRUE ~ 0),
-             age_diff = case_when(study == "SEARCH" ~ (age - min(age))*365,
-                                  TRUE ~ randdays/365)) %>% 
+      mutate(include = case_when(study == "SEARCH" & age == min(age) ~ 1),
+             age_diff = (age - min(age))*365) %>% 
       ungroup() %>% 
       dplyr::filter(include == 1),
     by = c("study","study_id")

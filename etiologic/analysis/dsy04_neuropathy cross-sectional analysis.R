@@ -95,6 +95,7 @@ library(stringr)
   survey_mod <- geeglm(survey_abnormal ~ cluster + age_category + female + race_eth + study, 
                             data = completed_data, 
                             family = poisson(link = "log"), 
+                            id = study_id,
                             weights = ltfu_weight, 
                             corstr = "independence")
   exam_mod <- geeglm(exam_abnormal ~ cluster + age_category + female + race_eth + study, 
@@ -115,6 +116,34 @@ library(stringr)
 survey_mod_out = broom::tidy(survey_mod)  
 exam_mod_out = broom::tidy(exam_mod)  
 combined_mod_out = broom::tidy(combined_mod)  
+
+# Adjusted (no study effect)-----------------------------------------------------------------------------------------------------
+
+survey_mod1 <- geeglm(survey_abnormal ~ cluster + age_category + female + race_eth, 
+                     data = completed_data, 
+                     family = poisson(link = "log"), 
+                     id = study_id,
+                     weights = ltfu_weight, 
+                     corstr = "independence")
+exam_mod1 <- geeglm(exam_abnormal ~ cluster + age_category + female + race_eth, 
+                   data = completed_data, 
+                   family = poisson(link = "log"), 
+                   id = study_id,
+                   weights = ltfu_weight, 
+                   corstr = "independence")
+combined_mod1 <- geeglm(combined_abnormal ~ cluster + age_category + female + race_eth, 
+                       data = completed_data, 
+                       family = poisson(link = "log"), 
+                       id = study_id,
+                       weights = ltfu_weight, 
+                       corstr = "independence")
+
+
+
+survey_mod1_out = broom::tidy(survey_mod1)  
+exam_mod1_out = broom::tidy(exam_mod1)  
+combined_mod1_out = broom::tidy(combined_mod1)  
+
 
 
 
@@ -152,6 +181,10 @@ bind_rows(
   survey_mod_out %>% mutate(outcome = "survey_abnormal"),
   exam_mod_out %>% mutate(outcome = "exam_abnormal"),
   combined_mod_out %>% mutate(outcome = "combined_abnormal"),
+  
+  survey_mod1_out %>% mutate(outcome = "survey_abnormal_nstudy"),
+  exam_mod1_out %>% mutate(outcome = "exam_abnormal_nstudy"),
+  combined_mod1_out %>% mutate(outcome = "combined_abnormal_nstudy"),
   
   survey_unmod_out %>% mutate(outcome = "unadjusted survey_abnormal"),
   exam_unmod_out %>% mutate(outcome = "unadjusted exam_abnormal"),
