@@ -505,3 +505,19 @@ today_included,race_eth,proportion,8.6053412462908,Grouped,NH Other
 today_included,race_eth,freq,29,Grouped,NH Other
 today_included,race_eth,proportion,21.958456973293767,Grouped,NH White
 today_included,race_eth,freq,74,Grouped,NH White
+Total,bmipct,proportion,48.8857938718663,Grouped,<98.5
+Total,bmipct,freq,351,Grouped,<98.5
+Total,bmipct,proportion,51.1142061281337,Grouped,>=98.5
+Total,bmipct,freq,367,Grouped,>=98.5
+search_excluded,bmipct,proportion,93.50649350649351,Grouped,<98.5
+search_excluded,bmipct,freq,72,Grouped,<98.5
+search_excluded,bmipct,proportion,6.4935064935064934,Grouped,>=98.5
+search_excluded,bmipct,freq,5,Grouped,>=98.5
+search_included,bmipct,proportion,44.73684210526316,Grouped,<98.5
+search_included,bmipct,freq,136,Grouped,<98.5
+search_included,bmipct,proportion,55.26315789473684,Grouped,>=98.5
+search_included,bmipct,freq,168,Grouped,>=98.5
+today_included,bmipct,proportion,42.433234421364986,Grouped,<98.5
+today_included,bmipct,freq,143,Grouped,<98.5
+today_included,bmipct,proportion,57.566765578635014,Grouped,>=98.5
+today_included,bmipct,freq,194,Grouped,>=98.5

@@ -36,6 +36,7 @@ insulinf = analytic_dataset['insulinf']
 metformin = analytic_dataset['metformin']
 tgl = analytic_dataset['tgl']
 glucosef = analytic_dataset['glucosef']
+bmipct = analytic_dataset['bmipct']
 
 retinopathy_lefteye = analytic_dataset['retinopathy_lefteye']
 retinopathy_righteye = analytic_dataset['retinopathy_righteye']
@@ -48,7 +49,7 @@ nephropathy_diag = analytic_dataset['nephropathy_diag']
 
 
 analytic_dataset = analytic_dataset.drop(columns = ['study_id', 'study', 'age_category', 'dmduration_category', 'race_eth',
-                                                  'female', 'tgl', 'glucosef', 'insulinf','totalc', 'insulin', 'metformin',
+                                                  'female','tgl','glucosef','insulinf','totalc','insulin','metformin','bmipct',
                                                   "retinopathy_lefteye","retinopathy_righteye","retinopathy","retinopathy_tx",
                                                   "dkd","nephropathy_prescription","nephropathy_tx","nephropathy_diag"])
 analytic_dataset.shape
@@ -80,7 +81,7 @@ analytic_dataset_cluster['cluster'] = kmeans.labels_
 analytic_dataset_cluster.groupby('cluster').mean()
 
 # relabel the cluster labels 
-analytic_dataset_cluster['cluster'] = analytic_dataset_cluster['cluster'].replace({0:'yMOD', 1:'ySIDD', 2:'ySIRD'})
+analytic_dataset_cluster['cluster'] = analytic_dataset_cluster['cluster'].replace({0:'yMOD', 1:'ySIRD', 2:'ySIDD'})
 analytic_dataset_cluster['cluster'].value_counts()
 
 # add study, race, and female back to the dataset
@@ -96,6 +97,7 @@ analytic_dataset_cluster['insulinf'] = insulinf
 analytic_dataset_cluster['metformin'] = metformin
 analytic_dataset_cluster['tgl'] = tgl
 analytic_dataset_cluster['glucosef'] = glucosef
+analytic_dataset_cluster['bmipct'] = bmipct
 
 analytic_dataset_cluster['retinopathy_lefteye'] = retinopathy_lefteye
 analytic_dataset_cluster['retinopathy_righteye'] = retinopathy_righteye
@@ -119,7 +121,7 @@ analytic_dataset_cluster.to_csv(path_diabetes_subphenotypes_youth_folder + '/wor
 data_scaled_cluster = data_scaled.copy()
 data_scaled_cluster['cluster'] = kmeans.labels_
 # relabel the cluster labels
-data_scaled_cluster['cluster'] = data_scaled_cluster['cluster'].replace({0:'yMOD', 1:'ySIDD', 2:'ySIRD'})
+data_scaled_cluster['cluster'] = data_scaled_cluster['cluster'].replace({0:'yMOD', 1:'ySIRD', 2:'ySIDD'})
 
 
 

@@ -913,3 +913,31 @@ Total,race_eth,proportion,8.736349453978159,Grouped,NH Other
 Total,race_eth,freq,56,Grouped,NH Other
 Total,race_eth,proportion,26.83307332293292,Grouped,NH White
 Total,race_eth,freq,172,Grouped,NH White
+Female_yMOD,bmipct,proportion,50.79365079365079,Grouped,<98.5
+Female_yMOD,bmipct,freq,96,Grouped,<98.5
+Female_yMOD,bmipct,proportion,49.20634920634921,Grouped,>=98.5
+Female_yMOD,bmipct,freq,93,Grouped,>=98.5
+Female_ySIDD,bmipct,proportion,81.94444444444444,Grouped,<98.5
+Female_ySIDD,bmipct,freq,59,Grouped,<98.5
+Female_ySIDD,bmipct,proportion,18.055555555555557,Grouped,>=98.5
+Female_ySIDD,bmipct,freq,13,Grouped,>=98.5
+Female_ySIRD,bmipct,proportion,18.75,Grouped,<98.5
+Female_ySIRD,bmipct,freq,21,Grouped,<98.5
+Female_ySIRD,bmipct,proportion,81.25,Grouped,>=98.5
+Female_ySIRD,bmipct,freq,91,Grouped,>=98.5
+Male_yMOD,bmipct,proportion,45.90163934426229,Grouped,<98.5
+Male_yMOD,bmipct,freq,56,Grouped,<98.5
+Male_yMOD,bmipct,proportion,54.09836065573771,Grouped,>=98.5
+Male_yMOD,bmipct,freq,66,Grouped,>=98.5
+Male_ySIDD,bmipct,proportion,77.08333333333333,Grouped,<98.5
+Male_ySIDD,bmipct,freq,37,Grouped,<98.5
+Male_ySIDD,bmipct,proportion,22.916666666666668,Grouped,>=98.5
+Male_ySIDD,bmipct,freq,11,Grouped,>=98.5
+Male_ySIRD,bmipct,proportion,10.204081632653061,Grouped,<98.5
+Male_ySIRD,bmipct,freq,10,Grouped,<98.5
+Male_ySIRD,bmipct,proportion,89.79591836734694,Grouped,>=98.5
+Male_ySIRD,bmipct,freq,88,Grouped,>=98.5
+Total,bmipct,proportion,43.52574102964119,Grouped,<98.5
+Total,bmipct,freq,279,Grouped,<98.5
+Total,bmipct,proportion,56.47425897035881,Grouped,>=98.5
+Total,bmipct,freq,362,Grouped,>=98.5

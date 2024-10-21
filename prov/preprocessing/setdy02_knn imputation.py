@@ -15,7 +15,7 @@ data_mi = pd.read_csv(path_diabetes_subphenotypes_youth_folder + '/working/clean
 #select variables 
 selected_variables = ["study_id","study","age_category","dmduration_category","race_eth",
                       "female","bmi","hba1c","cpeptidef","tgl","glucosef","insulinf",
-                      "sbp","dbp","totalc","ldlc","hdlc","insulin","metformin",
+                      "sbp","dbp","totalc","ldlc","hdlc","insulin","metformin","bmipct",
                       "retinopathy_lefteye","retinopathy_righteye","retinopathy","retinopathy_tx",
                       "dkd","nephropathy_prescription","nephropathy_tx","nephropathy_diag"]
 

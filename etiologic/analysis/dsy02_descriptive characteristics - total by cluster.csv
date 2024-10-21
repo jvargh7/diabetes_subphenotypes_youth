@@ -519,3 +519,19 @@ ySIRD,race_eth,proportion,9.047619047619047,Grouped,NH Other
 ySIRD,race_eth,freq,19,Grouped,NH Other
 ySIRD,race_eth,proportion,25.714285714285715,Grouped,NH White
 ySIRD,race_eth,freq,54,Grouped,NH White
+Total,bmipct,proportion,43.52574102964119,Grouped,<98.5
+Total,bmipct,freq,279,Grouped,<98.5
+Total,bmipct,proportion,56.47425897035881,Grouped,>=98.5
+Total,bmipct,freq,362,Grouped,>=98.5
+yMOD,bmipct,proportion,48.87459807073955,Grouped,<98.5
+yMOD,bmipct,freq,152,Grouped,<98.5
+yMOD,bmipct,proportion,51.12540192926045,Grouped,>=98.5
+yMOD,bmipct,freq,159,Grouped,>=98.5
+ySIDD,bmipct,proportion,80,Grouped,<98.5
+ySIDD,bmipct,freq,96,Grouped,<98.5
+ySIDD,bmipct,proportion,20,Grouped,>=98.5
+ySIDD,bmipct,freq,24,Grouped,>=98.5
+ySIRD,bmipct,proportion,14.761904761904763,Grouped,<98.5
+ySIRD,bmipct,freq,31,Grouped,<98.5
+ySIRD,bmipct,proportion,85.23809523809524,Grouped,>=98.5
+ySIRD,bmipct,freq,179,Grouped,>=98.5
