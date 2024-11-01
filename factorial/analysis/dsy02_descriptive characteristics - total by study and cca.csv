@@ -404,6 +404,9 @@ Total,insulin,missing,4,Proportion,NA
 Total,metformin,proportion,68.30188679245282,Proportion,NA
 Total,metformin,freq,795,Proportion,NA
 Total,metformin,missing,4,Proportion,NA
+Total,dmfamilyhistory,proportion,64.58072590738423,Proportion,NA
+Total,dmfamilyhistory,freq,799,Proportion,NA
+Total,dmfamilyhistory,missing,0,Proportion,NA
 search_excluded,female,proportion,61.038961038961034,Proportion,NA
 search_excluded,female,freq,77,Proportion,NA
 search_excluded,female,missing,0,Proportion,NA
@@ -413,6 +416,9 @@ search_excluded,insulin,missing,1,Proportion,NA
 search_excluded,metformin,proportion,9.210526315789473,Proportion,NA
 search_excluded,metformin,freq,76,Proportion,NA
 search_excluded,metformin,missing,1,Proportion,NA
+search_excluded,dmfamilyhistory,proportion,38.961038961038966,Proportion,NA
+search_excluded,dmfamilyhistory,freq,77,Proportion,NA
+search_excluded,dmfamilyhistory,missing,0,Proportion,NA
 search_included,female,proportion,53.246753246753244,Proportion,NA
 search_included,female,freq,385,Proportion,NA
 search_included,female,missing,0,Proportion,NA
@@ -422,6 +428,9 @@ search_included,insulin,missing,3,Proportion,NA
 search_included,metformin,proportion,52.09424083769634,Proportion,NA
 search_included,metformin,freq,382,Proportion,NA
 search_included,metformin,missing,3,Proportion,NA
+search_included,dmfamilyhistory,proportion,48.311688311688314,Proportion,NA
+search_included,dmfamilyhistory,freq,385,Proportion,NA
+search_included,dmfamilyhistory,missing,0,Proportion,NA
 today_included,female,proportion,60.23738872403561,Proportion,NA
 today_included,female,freq,337,Proportion,NA
 today_included,female,missing,0,Proportion,NA
@@ -431,6 +440,9 @@ today_included,insulin,missing,0,Proportion,NA
 today_included,metformin,proportion,100,Proportion,NA
 today_included,metformin,freq,337,Proportion,NA
 today_included,metformin,missing,0,Proportion,NA
+today_included,dmfamilyhistory,proportion,89.02077151335311,Proportion,NA
+today_included,dmfamilyhistory,freq,337,Proportion,NA
+today_included,dmfamilyhistory,missing,0,Proportion,NA
 Total,study,proportion,57.82227784730914,Grouped,SEARCH
 Total,study,freq,462,Grouped,SEARCH
 Total,study,proportion,42.17772215269086,Grouped,TODAY

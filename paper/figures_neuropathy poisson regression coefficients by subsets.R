@@ -20,15 +20,15 @@ combined_long <- combined_tab %>%
   separate(estimate_ci, into = c("estimate", "ci_low", "ci_high"), sep = "\\(|, |\\)") %>%
   mutate(across(c(estimate, ci_low, ci_high), as.numeric)) %>% 
    mutate(subset = factor(subset, levels = c(
-    "etiologic main clusters", "etiologic complete cases", "etiologic search only",
-    "factorial main clusters", "factorial complete cases", "factorial search only",
-    "provider main clusters", "provider complete cases", "provider search only"
+    "etiologic main clusters", "etiologic search only",
+    "factorial main clusters", "factorial search only",
+    "provider main clusters", "provider search only"
   ))) %>% 
   mutate(abnormal_type = factor(abnormal_type, levels = c(
     "Abnormal Examination Score", "Abnormal Questionnaire Score", "Abnormal Combined Score"
   )))
 
-
+# "etiologic complete cases","factorial complete cases","provider complete cases", 
 
 forest_plot <- ggplot(combined_long, aes(x = estimate, y = subset, color = term, shape = term)) +
   geom_point(position = position_dodge(width = 0.5), size = 2) +

@@ -2,15 +2,15 @@ rm(list=ls());gc();source(".Rprofile")
 
 
 etio_main <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/dsy01_cross sectional df.RDS"))
-etio_cca <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/complete cases/cca01_cross sectional complete cases df.RDS"))
+# etio_cca <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/complete cases/cca01_cross sectional complete cases df.RDS"))
 etio_se <-  readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/search only/se01_cross sectional df.RDS")) 
 
 fact_main <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/factorial/dsy01_cross sectional df.RDS"))
-fact_cca <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/factorial/complete cases/cca01_cross sectional complete cases df.RDS"))
+# fact_cca <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/factorial/complete cases/cca01_cross sectional complete cases df.RDS"))
 fact_se <-  readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/factorial/search only/se01_cross sectional df.RDS")) 
 
 prov_main <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/prov/dsy01_cross sectional df.RDS"))
-prov_cca <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/prov/complete cases/cca01_cross sectional complete cases df.RDS"))
+# prov_cca <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/prov/complete cases/cca01_cross sectional complete cases df.RDS"))
 prov_se <-  readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/prov/search only/se01_cross sectional df.RDS")) 
 
 
@@ -38,27 +38,27 @@ calculate_summary <- function(data) {
 
 
 etio_main_summary <- calculate_summary(etio_main)
-etio_cca_summary <- calculate_summary(etio_cca)
+# etio_cca_summary <- calculate_summary(etio_cca)
 etio_se_summary <- calculate_summary(etio_se)
 
 fact_main_summary <- calculate_summary(fact_main)
-fact_cca_summary <- calculate_summary(fact_cca)
+# fact_cca_summary <- calculate_summary(fact_cca)
 fact_se_summary <- calculate_summary(fact_se)
 
 prov_main_summary <- calculate_summary(prov_main)
-prov_cca_summary <- calculate_summary(prov_cca)
+# prov_cca_summary <- calculate_summary(prov_cca)
 prov_se_summary <- calculate_summary(prov_se)
 
 
 combined_summary <- bind_rows(
   etio_main_summary %>% mutate(subset = "etiologic", group = "main clusters"),
-  etio_cca_summary %>% mutate(subset = "etiologic", group = "complete cases"),
+  # etio_cca_summary %>% mutate(subset = "etiologic", group = "complete cases"),
   etio_se_summary %>% mutate(subset = "etiologic", group = "search only"),
   fact_main_summary %>% mutate(subset = "factorial", group = "main clusters"),
-  fact_cca_summary %>% mutate(subset = "factorial", group = "complete cases"),
+  # fact_cca_summary %>% mutate(subset = "factorial", group = "complete cases"),
   fact_se_summary %>% mutate(subset = "factorial", group = "search only"),
   prov_main_summary %>% mutate(subset = "prov", group = "main clusters"),
-  prov_cca_summary %>% mutate(subset = "prov", group = "complete cases"),
+  # prov_cca_summary %>% mutate(subset = "prov", group = "complete cases"),
   prov_se_summary %>% mutate(subset = "prov", group = "search only")
 )
 
@@ -96,7 +96,7 @@ fig <- ggplot(long_data, aes(x = cluster, y = value, shape = subset, color = gro
     strip.background = element_rect(fill = "lightblue", colour = "deepskyblue4", size = 0.5, linetype = "solid")
   ) +
   scale_shape_manual(values = c(16, 17, 18, 19, 20, 21)) +  
-  scale_color_manual(values = c("purple", "blue", "red")) 
+  scale_color_manual(values = c("blue", "red")) 
 
 
 ggsave(fig,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/mean and SD of cluster variables.png"),width=12, height = 8)

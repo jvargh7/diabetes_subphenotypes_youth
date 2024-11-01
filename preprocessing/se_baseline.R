@@ -27,7 +27,12 @@ etiologic <- search1to3 %>% mutate(wave = "SEARCH 1 TO 3") %>%
   dplyr::filter(!is.na(bmi)) %>% 
   ungroup() %>% 
   mutate(dmduration = dmduration/12) %>% 
-  mutate(retinopathy = if_else(is.na(retinopathy_lefteye) & is.na(retinopathy_righteye), 0, 1))
+  mutate(retinopathy = if_else(is.na(retinopathy_lefteye) & is.na(retinopathy_righteye), 0, 1)) %>% 
+  mutate(dmfamilyhistory = case_when(
+    wave == "SEARCH 1 TO 3" & dmfamilyhistory == 1 ~ 1,
+    wave == "SEARCH 4" & (mom_dm == 1 | mom_gdm == 1 | dad_dm == 1 | bro_dm == 1 | sis_dm == 1) ~ 1,
+    TRUE ~ 0
+  ))
 
 saveRDS(etiologic,paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_etiologic.RDS"))
 
@@ -54,7 +59,12 @@ factorial <- search1to3 %>% mutate(wave = "SEARCH 1 TO 3") %>%
   dplyr::filter(age == min(age)) %>% 
   dplyr::filter(!is.na(bmi)) %>% 
   ungroup() %>% 
-  mutate(dmduration = dmduration/12)
+  mutate(dmduration = dmduration/12) %>% 
+  mutate(dmfamilyhistory = case_when(
+    wave == "SEARCH 1 TO 3" & dmfamilyhistory == 1 ~ 1,
+    wave == "SEARCH 4" & (mom_dm == 1 | mom_gdm == 1 | dad_dm == 1 | bro_dm == 1 | sis_dm == 1) ~ 1,
+    TRUE ~ 0
+  ))
 
 saveRDS(factorial,paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_factorial.RDS"))
 
@@ -80,7 +90,12 @@ prov <- search1to3 %>% mutate(wave = "SEARCH 1 TO 3") %>%
   dplyr::filter(age == min(age)) %>% 
   dplyr::filter(!is.na(bmi)) %>% 
   ungroup() %>% 
-  mutate(dmduration = dmduration/12)
+  mutate(dmduration = dmduration/12) %>% 
+  mutate(dmfamilyhistory = case_when(
+    wave == "SEARCH 1 TO 3" & dmfamilyhistory == 1 ~ 1,
+    wave == "SEARCH 4" & (mom_dm == 1 | mom_gdm == 1 | dad_dm == 1 | bro_dm == 1 | sis_dm == 1) ~ 1,
+    TRUE ~ 0
+  ))
 
 saveRDS(prov,paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_prov.RDS"))
 

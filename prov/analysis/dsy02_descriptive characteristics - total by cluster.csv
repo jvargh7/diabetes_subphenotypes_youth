@@ -404,6 +404,9 @@ Total,insulin,missing,2,Proportion,NA
 Total,metformin,proportion,85.42319749216301,Proportion,NA
 Total,metformin,freq,638,Proportion,NA
 Total,metformin,missing,2,Proportion,NA
+Total,dmfamilyhistory,proportion,71.71875,Proportion,NA
+Total,dmfamilyhistory,freq,640,Proportion,NA
+Total,dmfamilyhistory,missing,0,Proportion,NA
 yMOD,female,proportion,60.535117056856194,Proportion,NA
 yMOD,female,freq,299,Proportion,NA
 yMOD,female,missing,0,Proportion,NA
@@ -413,6 +416,9 @@ yMOD,insulin,missing,1,Proportion,NA
 yMOD,metformin,proportion,90.93959731543623,Proportion,NA
 yMOD,metformin,freq,298,Proportion,NA
 yMOD,metformin,missing,1,Proportion,NA
+yMOD,dmfamilyhistory,proportion,77.92642140468227,Proportion,NA
+yMOD,dmfamilyhistory,freq,299,Proportion,NA
+yMOD,dmfamilyhistory,missing,0,Proportion,NA
 ySIDD,female,proportion,53.73134328358209,Proportion,NA
 ySIDD,female,freq,201,Proportion,NA
 ySIDD,female,missing,0,Proportion,NA
@@ -422,6 +428,9 @@ ySIDD,insulin,missing,1,Proportion,NA
 ySIDD,metformin,proportion,85.5,Proportion,NA
 ySIDD,metformin,freq,200,Proportion,NA
 ySIDD,metformin,missing,1,Proportion,NA
+ySIDD,dmfamilyhistory,proportion,66.66666666666666,Proportion,NA
+ySIDD,dmfamilyhistory,freq,201,Proportion,NA
+ySIDD,dmfamilyhistory,missing,0,Proportion,NA
 ySIRD,female,proportion,62.142857142857146,Proportion,NA
 ySIRD,female,freq,140,Proportion,NA
 ySIRD,female,missing,0,Proportion,NA
@@ -431,6 +440,9 @@ ySIRD,insulin,missing,0,Proportion,NA
 ySIRD,metformin,proportion,73.57142857142858,Proportion,NA
 ySIRD,metformin,freq,140,Proportion,NA
 ySIRD,metformin,missing,0,Proportion,NA
+ySIRD,dmfamilyhistory,proportion,65.71428571428571,Proportion,NA
+ySIRD,dmfamilyhistory,freq,140,Proportion,NA
+ySIRD,dmfamilyhistory,missing,0,Proportion,NA
 NA,cluster,proportion,100,Grouped,Total
 NA,cluster,freq,640,Grouped,Total
 NA,cluster,proportion,100,Grouped,yMOD
