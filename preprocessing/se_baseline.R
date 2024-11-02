@@ -24,9 +24,9 @@ etiologic <- search1to3 %>% mutate(wave = "SEARCH 1 TO 3") %>%
   
   mutate_at(vars(female,dmagediag),function(x) zoo::na.locf(x,na.rm=FALSE)) %>% 
   dplyr::filter(age == min(age)) %>% 
-  dplyr::filter(!is.na(bmi)) %>% 
   ungroup() %>% 
-  mutate(dmduration = dmduration/12)
+  mutate(dmduration = dmduration/12) 
+  
 
 saveRDS(etiologic,paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_etiologic.RDS"))
 

@@ -5,6 +5,7 @@ rm(list=ls()); gc(); source(".Rprofile")
 search <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/search/search_etiologic.RDS")) %>% 
   dplyr::filter(age >= 10,age<20) %>% 
   dplyr::filter(dmduration >= 0 & dmduration <= duration_cutoff) %>% 
+  dplyr::filter(!is.na(bmi))  %>% 
   mutate(study_id = as.character(study_id),study = "SEARCH",insulinf=NA) %>% 
   mutate(age_category = case_when(age < 14 ~ "<=13",
                                   age >15 ~ ">15",
