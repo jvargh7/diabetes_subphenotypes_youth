@@ -26,21 +26,18 @@ library(stringr)
   survey_mod <- geeglm(survey_abnormal ~ cluster + age_category + female + race_eth, 
                             data = crosssec_df_cca, 
                             family = poisson(link = "log"), 
-                            # This is incorrect - we are not trying to cluster on the cluster! This is the clustering for repeated measures!
                             id = study_id,
                             weights = ltfu_weight, 
                             corstr = "independence")
   exam_mod <- geeglm(exam_abnormal ~ cluster + age_category + female + race_eth, 
                           data = crosssec_df_cca, 
                           family = poisson(link = "log"), 
-                          # This is incorrect - we are not trying to cluster on the cluster! This is the clustering for repeated measures!
                           id = study_id,
                           weights = ltfu_weight, 
                           corstr = "independence")
   combined_mod <- geeglm(combined_abnormal ~ cluster + age_category + female + race_eth, 
                               data = crosssec_df_cca, 
                               family = poisson(link = "log"), 
-                              # This is incorrect - we are not trying to cluster on the cluster! This is the clustering for repeated measures!
                               id = study_id,
                               weights = ltfu_weight, 
                               corstr = "independence")

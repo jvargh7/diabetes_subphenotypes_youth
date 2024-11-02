@@ -38,7 +38,7 @@ fig_C = boxplot_df %>%
 age_data <- data.frame(
   cluster = c('yMOD', 'ySIDD', 'ySIRD', 'yMOD', 'ySIDD', 'ySIRD', 'yMOD', 'ySIDD', 'ySIRD'),
   age_category = c('≤13', '≤13', '≤13', '14-15', '14-15', '14-15', '>15', '>15', '>15'),
-  percentage = c(39.1, 46.9, 38.8, 22.2, 20, 22.3, 38.8, 33.1, 38.8)
+  percentage = c(38.6, 40, 36.7, 23.2, 23.3, 21.9, 38.3, 36.7, 41.4)
 )
 
 age_data$age_category <- factor(age_data$age_category, levels = c("≤13", "14-15", ">15"))

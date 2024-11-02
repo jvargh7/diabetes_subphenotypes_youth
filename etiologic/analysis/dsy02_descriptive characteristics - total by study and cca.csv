@@ -404,6 +404,9 @@ Total,insulin,missing,3,Proportion,NA
 Total,metformin,proportion,74.54545454545455,Proportion,NA
 Total,metformin,freq,715,Proportion,NA
 Total,metformin,missing,3,Proportion,NA
+Total,dmfamilyhistory,proportion,67.54874651810584,Proportion,NA
+Total,dmfamilyhistory,freq,718,Proportion,NA
+Total,dmfamilyhistory,missing,0,Proportion,NA
 search_excluded,female,proportion,61.038961038961034,Proportion,NA
 search_excluded,female,freq,77,Proportion,NA
 search_excluded,female,missing,0,Proportion,NA
@@ -413,6 +416,9 @@ search_excluded,insulin,missing,1,Proportion,NA
 search_excluded,metformin,proportion,9.210526315789473,Proportion,NA
 search_excluded,metformin,freq,76,Proportion,NA
 search_excluded,metformin,missing,1,Proportion,NA
+search_excluded,dmfamilyhistory,proportion,38.961038961038966,Proportion,NA
+search_excluded,dmfamilyhistory,freq,77,Proportion,NA
+search_excluded,dmfamilyhistory,missing,0,Proportion,NA
 search_included,female,proportion,55.92105263157895,Proportion,NA
 search_included,female,freq,304,Proportion,NA
 search_included,female,missing,0,Proportion,NA
@@ -422,6 +428,9 @@ search_included,insulin,missing,2,Proportion,NA
 search_included,metformin,proportion,62.58278145695364,Proportion,NA
 search_included,metformin,freq,302,Proportion,NA
 search_included,metformin,missing,2,Proportion,NA
+search_included,dmfamilyhistory,proportion,50.98684210526315,Proportion,NA
+search_included,dmfamilyhistory,freq,304,Proportion,NA
+search_included,dmfamilyhistory,missing,0,Proportion,NA
 today_included,female,proportion,60.23738872403561,Proportion,NA
 today_included,female,freq,337,Proportion,NA
 today_included,female,missing,0,Proportion,NA
@@ -431,6 +440,9 @@ today_included,insulin,missing,0,Proportion,NA
 today_included,metformin,proportion,100,Proportion,NA
 today_included,metformin,freq,337,Proportion,NA
 today_included,metformin,missing,0,Proportion,NA
+today_included,dmfamilyhistory,proportion,89.02077151335311,Proportion,NA
+today_included,dmfamilyhistory,freq,337,Proportion,NA
+today_included,dmfamilyhistory,missing,0,Proportion,NA
 Total,study,proportion,53.06406685236769,Grouped,SEARCH
 Total,study,freq,381,Grouped,SEARCH
 Total,study,proportion,46.93593314763231,Grouped,TODAY
@@ -505,3 +517,19 @@ today_included,race_eth,proportion,8.6053412462908,Grouped,NH Other
 today_included,race_eth,freq,29,Grouped,NH Other
 today_included,race_eth,proportion,21.958456973293767,Grouped,NH White
 today_included,race_eth,freq,74,Grouped,NH White
+Total,bmipct,proportion,48.8857938718663,Grouped,<98.5
+Total,bmipct,freq,351,Grouped,<98.5
+Total,bmipct,proportion,51.1142061281337,Grouped,>=98.5
+Total,bmipct,freq,367,Grouped,>=98.5
+search_excluded,bmipct,proportion,93.50649350649351,Grouped,<98.5
+search_excluded,bmipct,freq,72,Grouped,<98.5
+search_excluded,bmipct,proportion,6.4935064935064934,Grouped,>=98.5
+search_excluded,bmipct,freq,5,Grouped,>=98.5
+search_included,bmipct,proportion,44.73684210526316,Grouped,<98.5
+search_included,bmipct,freq,136,Grouped,<98.5
+search_included,bmipct,proportion,55.26315789473684,Grouped,>=98.5
+search_included,bmipct,freq,168,Grouped,>=98.5
+today_included,bmipct,proportion,42.433234421364986,Grouped,<98.5
+today_included,bmipct,freq,143,Grouped,<98.5
+today_included,bmipct,proportion,57.566765578635014,Grouped,>=98.5
+today_included,bmipct,freq,194,Grouped,>=98.5

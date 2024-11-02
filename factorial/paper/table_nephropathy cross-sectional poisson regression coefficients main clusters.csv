@@ -1,0 +1,10 @@
+term,nephropathy_abnormal
+(Intercept),"0.01 (0, 0.09)"
+clusterySIDD,"0.47 (0.03, 6.42)"
+clusterySIRD,"1.85 (0.36, 9.49)"
+age_category>15,"0.98 (0.16, 6.12)"
+age_category14-15,"0 (0, 0)"
+female,"1.23 (0.23, 6.68)"
+race_ethNH Black,"1.53 (0.11, 20.83)"
+race_ethHispanic,"4.36 (0.43, 44.4)"
+race_ethNH Other,"3.85 (0.23, 64.07)"

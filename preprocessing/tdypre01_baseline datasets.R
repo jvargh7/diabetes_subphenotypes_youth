@@ -1,9 +1,10 @@
 
 # rm(list=ls());gc();source(".Rprofile")
 
-vl_column1 = "baseline"
-vl_column2 = "pat"
-vl_column3 = "primout"
+vl_column1 = "BASELINE"
+vl_column2 = "PAT"
+vl_column3 = "PRIMOUT"
+vl_column6 = "FUNDUS"
 
 study_name = "TODAY"
 
@@ -13,6 +14,7 @@ data_path <- paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/Dat
 baseline <- data_extract(study_name,vl_column1,data_path) 
 pat <- data_extract(study_name,vl_column2,data_path) 
 primout <- data_extract(study_name,vl_column3,data_path) 
+fundus <- data_extract(study_name,vl_column6,data_path)
 
 baseline <- left_join(baseline,
                       pat,
@@ -36,7 +38,7 @@ baseline <- left_join(baseline,
                           bmiz == 3 ~ ">=2.35",
                           bmiz > 2.20 ~ "2.21-2.34",
                           TRUE ~ NA_character_),
-         age = case_when(age ==1 ~ "<=13",
+         age = case_when(age == 1 ~ "<=13",
                          age == 3 ~ ">15",
                          age %in% c(14,15) ~ "14-15",
                          TRUE ~ NA_character_),
@@ -64,5 +66,10 @@ baseline <- left_join(baseline,
   dplyr::select(-race) %>% 
   rename(race = race2)
 
+baseline <- left_join(baseline, 
+                      fundus,
+            by=c("study_id","randdays")) %>% 
+  mutate(retinopathy = case_when(drseverity == 90 | drseverity == NA ~ 0,
+                                 TRUE ~ 1))
 
-rm(pat,primout)
+rm(pat,primout,fundus)

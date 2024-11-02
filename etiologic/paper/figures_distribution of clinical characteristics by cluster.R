@@ -7,7 +7,25 @@ boxplot_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/
 
 cluster_colors = c("yMOD"="#F8BDA4","ySIRD"="#A1C3AC","ySIDD"="#ACD9EA")
 
-fig_A = boxplot_df %>% 
+age_data <- data.frame(
+  cluster = c('yMOD', 'ySIDD', 'ySIRD', 'yMOD', 'ySIDD', 'ySIRD', 'yMOD', 'ySIDD', 'ySIRD'),
+  age_category = c('≤13y', '≤13y', '≤13y', '14-15y', '14-15y', '14-15y', '>15y', '>15y', '>15y'),
+  percentage = c(38.6, 40, 36.7, 23.2, 23.3, 21.9, 38.3, 36.7, 41.4)
+)
+
+age_data$age_category <- factor(age_data$age_category, levels = c("≤13y", "14-15y", ">15y"))
+
+age_colors = c("≤13y"="#F8BDA4","14-15y"="#A1C3AC",">15y"="#ACD9EA")
+
+fig_A = age_data %>%
+  ggplot(data=., aes(x=age_category, y=percentage, fill=cluster)) +
+  geom_col(position = position_dodge(width=0.9),color = "black") +
+  xlab("") +
+  ylab("Age Category (%)") +
+  theme_bw() +
+  scale_fill_manual(name="",values=cluster_colors)
+
+fig_B = boxplot_df %>% 
   ggplot(data=.,aes(x=cluster,y=hba1c,fill=cluster)) +
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
@@ -16,7 +34,7 @@ fig_A = boxplot_df %>%
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
-fig_B = boxplot_df %>% 
+fig_C = boxplot_df %>% 
   ggplot(data=.,aes(x=cluster,y=bmi,fill=cluster)) +
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
@@ -25,7 +43,7 @@ fig_B = boxplot_df %>%
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
-fig_C = boxplot_df %>% 
+fig_D = boxplot_df %>% 
   ggplot(data=.,aes(x=cluster,y=cpeptidef,fill=cluster)) +
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
@@ -33,26 +51,6 @@ fig_C = boxplot_df %>%
   scale_y_continuous(limits=c(0,15),breaks=seq(0,15,by=5)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
-
-
-age_data <- data.frame(
-  cluster = c('yMOD', 'ySIDD', 'ySIRD', 'yMOD', 'ySIDD', 'ySIRD', 'yMOD', 'ySIDD', 'ySIRD'),
-  age_category = c('≤13', '≤13', '≤13', '14-15', '14-15', '14-15', '>15', '>15', '>15'),
-  percentage = c(38.6, 40, 36.7, 23.2, 23.3, 21.9, 38.3, 36.7, 41.4)
-)
-
-age_data$age_category <- factor(age_data$age_category, levels = c("≤13", "14-15", ">15"))
-
-age_colors = c("≤13"="#F8BDA4","14-15"="#A1C3AC",">15"="#ACD9EA")
-
-fig_D = age_data %>%
-  ggplot(data=., aes(x=age_category, y=percentage, fill=cluster)) +
-  geom_col(position = position_dodge(width=0.9),color = "black") +
-  xlab("") +
-  ylab("Percentage (%)") +
-  theme_bw() +
-  scale_fill_manual(name="",values=cluster_colors)
-
 
 fig_E = boxplot_df %>% 
   ggplot(data=.,aes(x=cluster,y=ldlc,fill=cluster)) +

@@ -106,4 +106,3 @@ ggarrange(fig_A,
           ncol=4,
           common.legend = TRUE,legend = "none") %>% 
   ggsave(.,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/prov/distribution of clinicalcharacteristics by cluster.jpg"),width=12,height =5.5)
-

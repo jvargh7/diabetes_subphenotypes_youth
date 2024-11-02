@@ -4,7 +4,7 @@ rm(list=ls());gc();source(".Rprofile")
 ### Elbow Plot
 library(ggplot2)
 
-imputed_data <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/factorial//setdy02_knn imputation.csv')) %>% 
+imputed_data <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/factorial/setdy02_knn imputation.csv')) %>% 
   dplyr::select(bmi, hba1c, cpeptidef, sbp, dbp, ldlc, hdlc)
 
 # Scaling the data can often yield better clustering results
@@ -36,5 +36,5 @@ theme_minimal() +  # Use a minimal theme
     panel.background = element_rect(fill = "white", colour = "white")
   )
 
-ggsave(elbow_plot,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/factorial//elbow plot for optimal number of clusters.png"),width=6, height = 4)
+ggsave(elbow_plot,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/factorial/elbow plot for optimal number of clusters.png"),width=6, height = 4)
 

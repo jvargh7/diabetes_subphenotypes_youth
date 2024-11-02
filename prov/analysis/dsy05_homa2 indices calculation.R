@@ -2,7 +2,7 @@ rm(list=ls());gc();source(".Rprofile")
 
 library(ggplot2)
 
-crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/dsy01_cross sectional df.RDS")) %>% 
+crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/prov/dsy01_cross sectional df.RDS")) %>% 
   dplyr::filter(study == "TODAY") %>% 
   group_by(study, study_id) %>% 
   mutate(tglhdl_ratio = tgl/hdlc) %>% 
@@ -89,4 +89,4 @@ value_select <- fig_df %>%
 
 library(openxlsx)
 
-write.xlsx(value_select, file = "etiologic/analysis/dsy05_homa2 indices calculation.xlsx")
+write.xlsx(value_select, file = "prov/analysis/dsy05_homa2 indices calculation.xlsx")

@@ -404,6 +404,9 @@ Total,insulin,missing,2,Proportion,NA
 Total,metformin,proportion,82.31611893583725,Proportion,NA
 Total,metformin,freq,639,Proportion,NA
 Total,metformin,missing,2,Proportion,NA
+Total,dmfamilyhistory,proportion,70.98283931357254,Proportion,NA
+Total,dmfamilyhistory,freq,641,Proportion,NA
+Total,dmfamilyhistory,missing,0,Proportion,NA
 yMOD,female,proportion,60.77170418006431,Proportion,NA
 yMOD,female,freq,311,Proportion,NA
 yMOD,female,missing,0,Proportion,NA
@@ -413,6 +416,9 @@ yMOD,insulin,missing,1,Proportion,NA
 yMOD,metformin,proportion,90.64516129032259,Proportion,NA
 yMOD,metformin,freq,310,Proportion,NA
 yMOD,metformin,missing,1,Proportion,NA
+yMOD,dmfamilyhistory,proportion,78.13504823151125,Proportion,NA
+yMOD,dmfamilyhistory,freq,311,Proportion,NA
+yMOD,dmfamilyhistory,missing,0,Proportion,NA
 ySIDD,female,proportion,60,Proportion,NA
 ySIDD,female,freq,120,Proportion,NA
 ySIDD,female,missing,0,Proportion,NA
@@ -422,6 +428,9 @@ ySIDD,insulin,missing,0,Proportion,NA
 ySIDD,metformin,proportion,55.00000000000001,Proportion,NA
 ySIDD,metformin,freq,120,Proportion,NA
 ySIDD,metformin,missing,0,Proportion,NA
+ySIDD,dmfamilyhistory,proportion,62.5,Proportion,NA
+ySIDD,dmfamilyhistory,freq,120,Proportion,NA
+ySIDD,dmfamilyhistory,missing,0,Proportion,NA
 ySIRD,female,proportion,53.333333333333336,Proportion,NA
 ySIRD,female,freq,210,Proportion,NA
 ySIRD,female,missing,0,Proportion,NA
@@ -431,6 +440,9 @@ ySIRD,insulin,missing,1,Proportion,NA
 ySIRD,metformin,proportion,85.64593301435407,Proportion,NA
 ySIRD,metformin,freq,209,Proportion,NA
 ySIRD,metformin,missing,1,Proportion,NA
+ySIRD,dmfamilyhistory,proportion,65.23809523809524,Proportion,NA
+ySIRD,dmfamilyhistory,freq,210,Proportion,NA
+ySIRD,dmfamilyhistory,missing,0,Proportion,NA
 NA,cluster,proportion,100,Grouped,Total
 NA,cluster,freq,641,Grouped,Total
 NA,cluster,proportion,100,Grouped,yMOD
@@ -519,3 +531,19 @@ ySIRD,race_eth,proportion,9.047619047619047,Grouped,NH Other
 ySIRD,race_eth,freq,19,Grouped,NH Other
 ySIRD,race_eth,proportion,25.714285714285715,Grouped,NH White
 ySIRD,race_eth,freq,54,Grouped,NH White
+Total,bmipct,proportion,43.52574102964119,Grouped,<98.5
+Total,bmipct,freq,279,Grouped,<98.5
+Total,bmipct,proportion,56.47425897035881,Grouped,>=98.5
+Total,bmipct,freq,362,Grouped,>=98.5
+yMOD,bmipct,proportion,48.87459807073955,Grouped,<98.5
+yMOD,bmipct,freq,152,Grouped,<98.5
+yMOD,bmipct,proportion,51.12540192926045,Grouped,>=98.5
+yMOD,bmipct,freq,159,Grouped,>=98.5
+ySIDD,bmipct,proportion,80,Grouped,<98.5
+ySIDD,bmipct,freq,96,Grouped,<98.5
+ySIDD,bmipct,proportion,20,Grouped,>=98.5
+ySIDD,bmipct,freq,24,Grouped,>=98.5
+ySIRD,bmipct,proportion,14.761904761904763,Grouped,<98.5
+ySIRD,bmipct,freq,31,Grouped,<98.5
+ySIRD,bmipct,proportion,85.23809523809524,Grouped,>=98.5
+ySIRD,bmipct,freq,179,Grouped,>=98.5

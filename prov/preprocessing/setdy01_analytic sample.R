@@ -10,7 +10,9 @@ search <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/sear
                                   age >15 ~ ">15",
                                   TRUE ~ "14-15"),
          dmduration_category = case_when(dmduration <= 5 ~ "<=5 months",
-                                         TRUE ~ "6-12 months"))
+                                         TRUE ~ "6-12 months")) %>% 
+  mutate(bmipct = case_when((pnorm(bmiz) * 100) < 98.5 ~ "<98.5",
+                            TRUE ~ ">=98.5"))
 
 # participants age: 10–17 y
 today <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today/today_baseline.RDS")) %>% 
@@ -22,8 +24,10 @@ today <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today
 
 # 19
 selected_vars = c("study_id","study","age_category","dmduration_category","race_eth",
-                  "female","bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc",
-                  "tgl","glucosef","insulinf","totalc","insulin","metformin")
+                  "female","bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc","bmipct",
+                  "tgl","glucosef","insulinf","totalc","insulin","metformin","dmfamilyhistory",
+                  "retinopathy_lefteye","retinopathy_righteye","retinopathy","retinopathy_tx",
+                  "dkd","nephropathy_prescription","nephropathy_tx","nephropathy_diag")
 
 
 source_df = bind_rows(search %>% dplyr::select(one_of(selected_vars)),
