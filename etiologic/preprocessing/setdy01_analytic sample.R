@@ -24,7 +24,7 @@ today <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/today
 
 
 # 19
-selected_vars = c("study_id","study","age_category","dmduration_category","race_eth",
+selected_vars = c("study_id","study","age_category","dmduration_category","race_eth","ethnicity",
                   "female","bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc","bmipct",
                   "tgl","glucosef","insulinf","totalc","insulin","metformin","dmfamilyhistory",
                   "retinopathy_lefteye","retinopathy_righteye","retinopathy","retinopathy_tx",
