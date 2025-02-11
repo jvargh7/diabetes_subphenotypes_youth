@@ -63,12 +63,12 @@ write_csv(table_df,"prov/analysis/dsy02_descriptive characteristics - total by s
 ### STable 3 - sex*cluster
 
 table_df = analytic_df %>% 
-  mutate(sex_cluster = case_when(female == 1 & cluster == "yMOD" ~ "Female_yMOD",
-                                 female == 0 & cluster == "yMOD" ~ "Male_yMOD",
-                                 female == 1 & cluster == "ySIDD" ~ "Female_ySIDD",
-                                 female == 0 & cluster == "ySIDD" ~ "Male_ySIDD",
-                                 female == 1 & cluster == "ySIRD" ~ "Female_ySIRD",
-                                 female == 0 & cluster == "ySIRD" ~ "Male_ySIRD")) %>% 
+  mutate(sex_cluster = case_when(female == 1 & cluster == "yOD" ~ "Female_yOD",
+                                 female == 0 & cluster == "yOD" ~ "Male_yOD",
+                                 female == 1 & cluster == "yIDD" ~ "Female_yIDD",
+                                 female == 0 & cluster == "yIDD" ~ "Male_yIDD",
+                                 female == 1 & cluster == "yIRD" ~ "Female_yIRD",
+                                 female == 0 & cluster == "yIRD" ~ "Male_yIRD")) %>% 
   bind_rows(.,
             {.} %>% 
               mutate(sex_cluster="Total")) %>% 

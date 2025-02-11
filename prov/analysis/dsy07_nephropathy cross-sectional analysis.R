@@ -4,7 +4,7 @@ library(geepack)
 library(stringr)
 
 completed_data <- readRDS("prov/analysis/dsy06_nephropathy mi_dfs.RDS") %>%
-  mutate(cluster = factor(cluster,levels=c("yMOD","ySIDD","ySIRD")),
+  mutate(cluster = factor(cluster,levels=c("yOD","yIDD","yIRD")),
          race_eth = factor(race_eth,levels=c("NH White","NH Black","Hispanic","NH Other"))) 
 
 

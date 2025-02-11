@@ -26,7 +26,7 @@ labels <- c(
 )
 #  "etiologic complete cases","factorial complete cases","prov complete cases",
 
-terms_to_select <- c("clusterySIDD", "clusterySIRD")
+terms_to_select <- c("clusteryIDD", "clusteryIRD")
 
 combined_tab <- bind_rows(
   lapply(seq_along(datasets), function(i) {

@@ -15,7 +15,7 @@ data_extract <- function(study_name, vl_column,data_path,df_name = character()){
   }
   
   if(Sys.info()["user"] == "JGUO258"){
-    vl_sheet = readxl::read_excel("C:/Users/JGUO258/Documents/JGUO/diabetes_subphenotypes_youth/data/Phenotypes Variable List.xlsx",
+    vl_sheet = readxl::read_excel("C:/Users/JGUO258/Documents/JGUO/papers repo/diabetes_subphenotypes_youth/data/Phenotypes Variable List.xlsx",
                                   sheet=study_name)
   }
   

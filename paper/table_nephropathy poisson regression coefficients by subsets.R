@@ -14,7 +14,7 @@ datasets <- list(
 labels <- c("etiologic search only", "factorial search only", "prov search only")
 
 
-terms_to_select <- c("clusterySIDD", "clusterySIRD")
+terms_to_select <- c("clusteryIDD", "clusteryIRD")
 
 combined_tab <- bind_rows(
   lapply(seq_along(datasets), function(i) {

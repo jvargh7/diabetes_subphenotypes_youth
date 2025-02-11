@@ -20,7 +20,7 @@ library(stringr)
   
   completed_data <- complete(mi_dfs, action = 1) %>%
     # dplyr::filter(earliest == 1) %>% 
-    mutate(cluster = factor(cluster,levels=c("yMOD","ySIDD","ySIRD")),
+    mutate(cluster = factor(cluster,levels=c("yOD","yIDD","yIRD")),
            race_eth = factor(race_eth,levels=c("NH White","NH Black","Hispanic","NH Other"))) %>% 
     ### Examination
     mutate(Deformities = case_when(obsmnsir1 == 1 | obsmnsil1 == 1 ~ 1,

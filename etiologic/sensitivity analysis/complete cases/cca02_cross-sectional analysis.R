@@ -6,7 +6,7 @@ crosssec_df_cca <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/wor
   dplyr::select(-"nonna_selfmnsi") %>% 
   mutate(cs_available = case_when(is.na(combined_abnormal) ~ 0,
                                   TRUE ~ 1)) %>% 
-  mutate(cluster = factor(cluster,levels=c("yMOD","ySIDD","ySIRD")),
+  mutate(cluster = factor(cluster,levels=c("yOD","yIDD","yIRD")),
          race_eth = factor(race_eth,levels=c("NH White","NH Black","Hispanic","NH Other"))) %>% 
   # convert to numberic
   mutate(study_id = case_when(study == "TODAY" ~ str_replace_all(study_id, "-", ""),

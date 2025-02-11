@@ -5,7 +5,7 @@ library(ggplot2)
 boxplot_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/factorial/dsy01_cross sectional df.RDS")) %>%
   dplyr::select("study_id","cluster", "hba1c", "cpeptidef", "sbp", "dbp", "ldlc", "hdlc", "bmi","age_category")
 
-cluster_colors = c("yMOD"="#F8BDA4","ySIRD"="#A1C3AC","ySIDD"="#ACD9EA")
+cluster_colors = c("yOD"="#F8BDA4","yIRD"="#A1C3AC","yIDD"="#ACD9EA")
 
 fig_A = boxplot_df %>% 
   ggplot(data=.,aes(x=cluster,y=hba1c,fill=cluster)) +
@@ -36,7 +36,7 @@ fig_C = boxplot_df %>%
 
 
 age_data <- data.frame(
-  cluster = c('yMOD', 'ySIDD', 'ySIRD', 'yMOD', 'ySIDD', 'ySIRD', 'yMOD', 'ySIDD', 'ySIRD'),
+  cluster = c('yOD', 'yIDD', 'yIRD', 'yOD', 'yIDD', 'yIRD', 'yOD', 'yIDD', 'yIRD'),
   age_category = c('≤13', '≤13', '≤13', '14-15', '14-15', '14-15', '>15', '>15', '>15'),
   percentage = c(38.6, 40, 36.7, 23.2, 23.3, 21.9, 38.3, 36.7, 41.4)
 )

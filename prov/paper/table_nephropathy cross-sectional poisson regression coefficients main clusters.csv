@@ -1,7 +1,7 @@
 term,nephropathy_abnormal
 (Intercept),"0.02 (0, 0.09)"
-clusterySIDD,"1.23 (0.19, 7.97)"
-clusterySIRD,"2.86 (0.61, 13.49)"
+clusteryIDD,"1.23 (0.19, 7.97)"
+clusteryIRD,"2.86 (0.61, 13.49)"
 age_category>15,"0.6 (0.15, 2.46)"
 age_category14-15,"1.56 (0.36, 6.83)"
 female,"1.32 (0.35, 4.92)"
