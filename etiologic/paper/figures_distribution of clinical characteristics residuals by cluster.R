@@ -30,7 +30,7 @@ fig_B = boxplot_df %>%
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
   ylab("HbA1c Residuals (%)") +
-  scale_y_continuous(limits=c(0,10),breaks=seq(0,10,by=2)) +
+  scale_y_continuous(limits=c(-3,9),breaks=seq(-3,9,by=3)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
@@ -39,7 +39,7 @@ fig_C = boxplot_df %>%
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
   ylab(bquote('BMI Residuals ( kg' /m^2~')')) +
-  scale_y_continuous(limits=c(0,60),breaks=seq(0,60,by=10)) +
+  scale_y_continuous(limits=c(-20,60),breaks=seq(-20,60,by=10)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
@@ -48,7 +48,7 @@ fig_D = boxplot_df %>%
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
   ylab("Fasting C-peptide Residuals (ng/mL)") +
-  scale_y_continuous(limits=c(0,10),breaks=seq(0,10,by=2)) +
+  scale_y_continuous(limits=c(-4,10),breaks=seq(-4,10,by=2)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
@@ -57,7 +57,7 @@ fig_E = boxplot_df %>%
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
   ylab("LDL Cholesterol Residuals (mg/dL)") +
-  scale_y_continuous(limits=c(0,150),breaks=seq(0,150,by=50)) +
+  scale_y_continuous(limits=c(-80,140),breaks=seq(-80,140,by=20)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
@@ -66,7 +66,7 @@ fig_F = boxplot_df %>%
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
   ylab("HDL Cholesterol Residuals (mg/dL)") +
-  scale_y_continuous(limits=c(0,40),breaks=seq(0,40,by=10)) +
+  scale_y_continuous(limits=c(-30,40),breaks=seq(-30,40,by=10)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
@@ -75,7 +75,7 @@ fig_G = boxplot_df %>%
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
   ylab("SBP Residuals (mmHg)") +
-  scale_y_continuous(limits=c(0,50),breaks=seq(0,50,by=10)) +
+  scale_y_continuous(limits=c(-40,50),breaks=seq(-40,50,by=10)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
@@ -84,7 +84,7 @@ fig_H = boxplot_df %>%
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
   ylab("DBP Residuals (mmHg)") +
-  scale_y_continuous(limits=c(0,40),breaks=seq(0,40,by=10)) +
+  scale_y_continuous(limits=c(-30,40),breaks=seq(-30,40,by=10)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
