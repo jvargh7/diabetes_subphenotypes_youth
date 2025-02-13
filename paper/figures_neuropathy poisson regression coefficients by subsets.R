@@ -45,5 +45,5 @@ forest_plot <- ggplot(combined_long, aes(x = estimate, y = subset, color = term,
   ) +
   geom_vline(xintercept = 1, linetype = "dashed", color = "black")
   
-ggsave(forest_plot,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/forest plot of neuropathy prevalence ratio by subset.jpg"),width=12,height =5.5)
+ggsave(forest_plot,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/forest plot of neuropathy prevalence ratio by subset.tif"),width=12,height =5.5)
 

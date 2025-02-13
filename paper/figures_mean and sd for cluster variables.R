@@ -99,7 +99,7 @@ fig <- ggplot(long_data, aes(x = cluster, y = value, shape = subset, color = gro
   scale_color_manual(values = c("blue", "red")) 
 
 
-ggsave(fig,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/mean and SD of cluster variables.png"),width=12, height = 8)
+ggsave(fig,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/mean and SD of cluster variables.tif"),width=12, height = 8)
 
 
 

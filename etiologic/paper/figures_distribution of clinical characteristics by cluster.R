@@ -5,7 +5,7 @@ library(ggplot2)
 boxplot_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/dsy01_cross sectional df.RDS")) %>%
   dplyr::select("study_id","cluster", "hba1c", "cpeptidef", "sbp", "dbp", "ldlc", "hdlc", "bmi","age_category")
 
-cluster_colors = c("yOD"="#F8BDA4","yIRD"="#A1C3AC","yIDD"="#ACD9EA")
+cluster_colors = c("yOD"="#F8BDA4","yIRD"="#6B8E6A","yIDD"="#ACD9EA")
 
 age_data <- data.frame(
   cluster = c('yOD', 'yIDD', 'yIRD', 'yOD', 'yIDD', 'yIRD', 'yOD', 'yIDD', 'yIRD'),
@@ -15,7 +15,7 @@ age_data <- data.frame(
 
 age_data$age_category <- factor(age_data$age_category, levels = c("≤13y", "14-15y", ">15y"))
 
-age_colors = c("≤13y"="#F8BDA4","14-15y"="#A1C3AC",">15y"="#ACD9EA")
+age_colors = c("≤13y"="#F8BDA4","14-15y"="#6B8E6A",">15y"="#ACD9EA")
 
 fig_A = age_data %>%
   ggplot(data=., aes(x=age_category, y=percentage, fill=cluster)) +
@@ -103,4 +103,4 @@ ggarrange(fig_A,
           nrow=2,
           ncol=4,
           common.legend = TRUE,legend = "none") %>% 
-  ggsave(.,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/etiologic/distribution of clinicalcharacteristics by cluster.jpg"),width=12,height =5.5)
+  ggsave(.,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/etiologic/distribution of clinicalcharacteristics by cluster.tif"),width=12,height =5.5)
