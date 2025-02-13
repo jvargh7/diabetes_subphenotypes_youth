@@ -1,9 +1,9 @@
 rm(list=ls());gc();source(".Rprofile")
 
-library(ggplot2)
+boxplot_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/dsy01_cross sectional df.RDS")) %>% 
+  dplyr::select("study_id","cluster", "age_category",
+                "bmi_residual","hba1c_residual","cpeptidef_residual", "sbp_residual","dbp_residual","ldlc_residual","hdlc_residual")
 
-boxplot_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/dsy01_cross sectional df.RDS")) %>%
-  dplyr::select("study_id","cluster", "hba1c", "cpeptidef", "sbp", "dbp", "ldlc", "hdlc", "bmi","age_category")
 
 cluster_colors = c("yOD"="#F8BDA4","yIRD"="#6B8E6A","yIDD"="#ACD9EA")
 
@@ -26,65 +26,65 @@ fig_A = age_data %>%
   scale_fill_manual(name="",values=cluster_colors)
 
 fig_B = boxplot_df %>% 
-  ggplot(data=.,aes(x=cluster,y=hba1c,fill=cluster)) +
+  ggplot(data=.,aes(x=cluster,y=hba1c_residual,fill=cluster)) +
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
-  ylab("HbA1c (%)") +
-  scale_y_continuous(limits=c(0,20),breaks=seq(0,20,by=5)) +
+  ylab("HbA1c Residuals (%)") +
+  scale_y_continuous(limits=c(0,10),breaks=seq(0,10,by=2)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
 fig_C = boxplot_df %>% 
-  ggplot(data=.,aes(x=cluster,y=bmi,fill=cluster)) +
+  ggplot(data=.,aes(x=cluster,y=bmi_residual,fill=cluster)) +
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
-  ylab(bquote('BMI ( kg' /m^2~')')) +
+  ylab(bquote('BMI Residuals ( kg' /m^2~')')) +
   scale_y_continuous(limits=c(0,60),breaks=seq(0,60,by=10)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
 fig_D = boxplot_df %>% 
-  ggplot(data=.,aes(x=cluster,y=cpeptidef,fill=cluster)) +
+  ggplot(data=.,aes(x=cluster,y=cpeptidef_residual,fill=cluster)) +
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
-  ylab("Fasting C-peptide (ng/mL)") +
-  scale_y_continuous(limits=c(0,15),breaks=seq(0,15,by=5)) +
+  ylab("Fasting C-peptide Residuals (ng/mL)") +
+  scale_y_continuous(limits=c(0,10),breaks=seq(0,10,by=2)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
 fig_E = boxplot_df %>% 
-  ggplot(data=.,aes(x=cluster,y=ldlc,fill=cluster)) +
+  ggplot(data=.,aes(x=cluster,y=ldlc_residual,fill=cluster)) +
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
-  ylab("LDL Cholesterol (mg/dL)") +
-  scale_y_continuous(limits=c(0,250),breaks=seq(0,250,by=50)) +
+  ylab("LDL Cholesterol Residuals (mg/dL)") +
+  scale_y_continuous(limits=c(0,150),breaks=seq(0,150,by=50)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
 fig_F = boxplot_df %>% 
-  ggplot(data=.,aes(x=cluster,y=hdlc,fill=cluster)) +
+  ggplot(data=.,aes(x=cluster,y=hdlc_residual,fill=cluster)) +
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
-  ylab("HDL Cholesterol (mg/dL)") +
-  scale_y_continuous(limits=c(0,100),breaks=seq(0,100,by=20)) +
+  ylab("HDL Cholesterol Residuals (mg/dL)") +
+  scale_y_continuous(limits=c(0,40),breaks=seq(0,40,by=10)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
 fig_G = boxplot_df %>% 
-  ggplot(data=.,aes(x=cluster,y=sbp,fill=cluster)) +
+  ggplot(data=.,aes(x=cluster,y=sbp_residual,fill=cluster)) +
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
-  ylab("SBP (mmHg)") +
-  scale_y_continuous(limits=c(0,200),breaks=seq(0,200,by=50)) +
+  ylab("SBP Residuals (mmHg)") +
+  scale_y_continuous(limits=c(0,50),breaks=seq(0,50,by=10)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
 fig_H = boxplot_df %>% 
-  ggplot(data=.,aes(x=cluster,y=dbp,fill=cluster)) +
+  ggplot(data=.,aes(x=cluster,y=dbp_residual,fill=cluster)) +
   geom_boxplot(position = position_dodge(width=0.9)) +
   xlab("") +
-  ylab("DBP (mmHg)") +
-  scale_y_continuous(limits=c(0,120),breaks=seq(0,120,by=20)) +
+  ylab("DBP Residuals (mmHg)") +
+  scale_y_continuous(limits=c(0,40),breaks=seq(0,40,by=10)) +
   theme_bw() +
   scale_fill_manual(name="",values=cluster_colors)
 
@@ -103,4 +103,4 @@ ggarrange(fig_A,
           nrow=2,
           ncol=4,
           common.legend = TRUE,legend = "none") %>% 
-  ggsave(.,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/etiologic/distribution of clinical characteristics by cluster.tif"),width=12,height =5.5)
+  ggsave(.,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/etiologic/distribution of clinical characteristics residuals by cluster.tif"),width=12,height =6)
