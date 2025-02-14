@@ -10,6 +10,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from kneed import KneeLocator
 from sklearn.cluster import KMeans
+from sklearn.cluster import AgglomerativeClustering
+from scipy.cluster.hierarchy import dendrogram, linkage
+from sklearn.datasets import make_blobs
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import StandardScaler
 
@@ -17,7 +20,7 @@ if os.getlogin()=="JVARGH7":
     path_diabetes_subphenotypes_youth_folder = "C:/Cloud/OneDrive - Emory University/Papers/Subphenotypes in Youth-onset T2DM"
 if os.getlogin()=='JGUO258':
     path_diabetes_subphenotypes_youth_folder = "C:/Users/JGUO258/OneDrive - Emory/Papers/Subphenotypes in Youth-onset T2DM"
-
+    repo = "C:/Users/JGUO258/Documents/JGUO/papers repo/diabetes_subphenotypes_youth/"
 
 analytic_dataset = pd.read_csv(path_diabetes_subphenotypes_youth_folder + '/working/cleaned/etiologic/setdy03_knn imputation add residuals.csv') 
 
@@ -73,8 +76,70 @@ data_scaled.head()
 var = ["bmi_residual","hba1c_residual","cpeptidef_residual", "sbp_residual","dbp_residual","ldlc_residual","hdlc_residual"]
 cluster_var = data_scaled[var]
 
+scaler = StandardScaler() 
+scaled_data = scaler.fit_transform(cluster_var)
+
+# Convert scaled data back to a DataFrame and add study_id and study back
+
+scaled_data_df = pd.DataFrame(scaled_data, columns=cluster_var.columns)
+scaled_data_df['study_id'] = study_id.values
+scaled_data_df['study'] = study.values
+print(scaled_data_df[:5])
+
+# Select initial centroids for k-means based on hierarchical clustering
+# Perform hierarchical clustering with k clusters
+
+k = 3
+
+# select five variables to cluster
+data_to_cluster = scaled_data_df[var]
+
+X = data_to_cluster.values
+Z = linkage(X, method='ward')
+agg_clustering = AgglomerativeClustering(n_clusters=k, linkage='ward')
+agg_labels = agg_clustering.fit_predict(X)
+
+# Calculate the centroids based on the hierarchical clustering
+initial_centroids = np.array([X[agg_labels == i].mean(axis=0) for i in range(k)])
+print(initial_centroids)
+
 kmeans = KMeans(init="random", n_clusters=3, n_init=10, max_iter=300, random_state=57)
 kmeans.fit(cluster_var)
+
+# Add the labels to the scaled dataset
+scaled_data_df['cluster'] = kmeans.labels_
+
+kmeans.inertia_
+kmeans.cluster_centers_
+
+
+kmeans_kwargs = { # set the parameters for the kmeans algorithm
+    "init": "random",
+    "n_init": 10,
+    "max_iter": 300,
+    "random_state": 57,
+}
+
+# A list holds the SSE values for each k
+sse = [] #initiate an empty list to store the sum of squared errors 
+for k in range(1, 11):
+    kmeans = KMeans(n_clusters=k, **kmeans_kwargs)
+    kmeans.fit(data_to_cluster)
+    sse.append(kmeans.inertia_)
+
+kl = KneeLocator(range(1, 11), sse, curve="convex", direction="decreasing")
+print("Elbow point:" + str(kl.elbow)) # returns the elbow point
+cluster_summary = scaled_data_df.groupby('cluster').describe()
+print(cluster_summary)
+data_to_plot = scaled_data_df[var + ['cluster']]
+
+# Summary of clusters
+cluster_summary = data_scaled[selected_variables + ['cluster']].groupby('cluster').mean()
+print(cluster_summary)
+# save the summary data
+cluster_summary.to_csv(repo + 'etiologic/preprocessing/setdy04_kmeans01_cluster_summary.csv') 
+
+
 
 # summarize the cluster labels to the original dataset
 analytic_dataset_cluster = analytic_dataset.copy()
@@ -150,3 +215,4 @@ plt.legend(title='Variable', bbox_to_anchor=(1.01, 1), loc=2, borderaxespad=0.)
 plt.tight_layout()  # Adjust the layout to make room for the legend
 plt.show()
  
+
