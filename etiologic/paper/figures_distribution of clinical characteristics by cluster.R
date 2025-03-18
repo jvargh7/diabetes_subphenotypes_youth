@@ -102,5 +102,5 @@ ggarrange(fig_A,
           fig_H,
           nrow=2,
           ncol=4,
-          common.legend = TRUE,legend = "none") %>% 
+          common.legend = TRUE,legend = "bottom") %>% 
   ggsave(.,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/etiologic/distribution of clinical characteristics by cluster.tif"),width=12,height =5.5)

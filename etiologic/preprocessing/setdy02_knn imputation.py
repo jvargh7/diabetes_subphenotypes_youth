@@ -7,7 +7,7 @@ import os
 if os.getlogin()=="JVARGH7":
     path_diabetes_subphenotypes_youth_folder = "C:/Cloud/OneDrive - Emory University/Papers/Subphenotypes in Youth-onset T2DM"
 if os.getlogin()=='JGUO258':
-    path_diabetes_subphenotypes_youth_folder = "C:/Users/JGUO258/OneDrive - Emory/Subphenotypes in Youth-onset T2DM"
+    path_diabetes_subphenotypes_youth_folder = "C:/Users/JGUO258/OneDrive - Emory/Papers/Subphenotypes in Youth-onset T2DM"
 
 
 data_mi = pd.read_csv(path_diabetes_subphenotypes_youth_folder + '/working/cleaned/etiologic/setdy01a_analytic sample.csv')

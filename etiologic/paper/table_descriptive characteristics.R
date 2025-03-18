@@ -5,7 +5,7 @@ rm(list=ls());gc();source(".Rprofile")
 
 mean_vars = c("bmi","cpeptidef", "sbp","dbp","ldlc","hdlc","totalc","insulinf","tgl","glucosef")
 
-median_vars = c("hba1c")
+median_vars = c("hba1c","tgl_hdl")
 
 table_df <- read_csv("etiologic/analysis/dsy02_descriptive characteristics - total by cluster.csv") %>% 
   dplyr::mutate(selected_rows = case_when(variable %in% mean_vars & est %in% c("mean","sd") ~ 1,
@@ -22,7 +22,7 @@ table_df <- read_csv("etiologic/analysis/dsy02_descriptive characteristics - tot
   )) %>% 
   dplyr::select(variable,group,cluster,output) %>% 
   pivot_wider(names_from=cluster,values_from=output) %>% 
-  dplyr::select(variable,group,Total,yMOD,ySIDD,ySIRD)
+  dplyr::select(variable,group,Total,yOD,yIDD,yIRD)
 
 write_csv(table_df,"etiologic/paper/table_descriptive characteristics by cluster.csv")  
 

@@ -1,11 +1,15 @@
 rm(list=ls());gc();source(".Rprofile")
 
+library(ggpattern)
+
 boxplot_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/dsy01_cross sectional df.RDS")) %>% 
   dplyr::select("study_id","cluster", "age_category",
                 "bmi_residual","hba1c_residual","cpeptidef_residual", "sbp_residual","dbp_residual","ldlc_residual","hdlc_residual")
 
 
-cluster_colors = c("yOD"="#F8BDA4","yIRD"="#6B8E6A","yIDD"="#ACD9EA")
+# cluster_colors = c("yOD"="#F8BDA4","yIRD"="#6B8E6A","yIDD"="#ACD9EA")
+cluster_colors = c("yOD"="#D9D9D9", "yIRD"="#969696", "yIDD"="#404040")
+
 
 age_data <- data.frame(
   cluster = c('yOD', 'yIDD', 'yIRD', 'yOD', 'yIDD', 'yIRD', 'yOD', 'yIDD', 'yIRD'),
@@ -15,7 +19,7 @@ age_data <- data.frame(
 
 age_data$age_category <- factor(age_data$age_category, levels = c("≤13y", "14-15y", ">15y"))
 
-age_colors = c("≤13y"="#F8BDA4","14-15y"="#6B8E6A",">15y"="#ACD9EA")
+age_colors = c("≤13y"="#D9D9D9","14-15y"="#969696",">15y"="#404040")
 
 fig_A = age_data %>%
   ggplot(data=., aes(x=age_category, y=percentage, fill=cluster)) +
@@ -32,7 +36,7 @@ fig_B = boxplot_df %>%
   ylab("HbA1c Residuals (%)") +
   scale_y_continuous(limits=c(-3,9),breaks=seq(-3,9,by=3)) +
   theme_bw() +
-  scale_fill_manual(name="",values=cluster_colors)
+  scale_fill_manual(name="",values=cluster_colors) 
 
 fig_C = boxplot_df %>% 
   ggplot(data=.,aes(x=cluster,y=bmi_residual,fill=cluster)) +
@@ -103,6 +107,6 @@ ggarrange(fig_A,
           nrow=2,
           ncol=4,
           common.legend = TRUE,legend = "bottom") %>% 
-  ggsave(.,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/etiologic/distribution of clinical characteristics residuals by cluster.tif"),width=12,height =6)
+  ggsave(.,filename=paste0(path_diabetes_subphenotypes_youth_folder,"/figures/etiologic/distribution of clinical characteristics residuals by cluster - black and white.tif"),width=12,height =6)
 
 

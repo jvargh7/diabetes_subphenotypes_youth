@@ -1,12 +1,13 @@
 rm(list=ls());gc();source(".Rprofile")
 
 
-analytic_df <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/etiologic/setdy04_kmeans clustering.csv')) 
+analytic_df <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder, '/working/cleaned/etiologic/setdy04_kmeans clustering.csv')) %>% 
+  mutate(tgl_hdl = tgl/hdlc)
 source_df <- read.csv(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/setdy01c_source sample.csv"))
 
 source("functions/table1_summary.R")
 
-c_vars = c("bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc","totalc","insulinf","tgl","glucosef")
+c_vars = c("bmi","hba1c","cpeptidef", "sbp","dbp","ldlc","hdlc","totalc","insulinf","tgl","glucosef","tgl_hdl")
 p_vars = c("female","insulin","metformin","dmfamilyhistory")
 g_vars = c("cluster","study","dmduration_category","age_category","race_eth","bmipct")
 
