@@ -13,5 +13,3 @@ if(Sys.info()["user"] == "JGUO258"){
 path_diabetes_subphenotypes_youth_folder <- "C:/Users/JGUO258/OneDrive - Emory/Papers/Subphenotypes in Youth-onset T2DM"
 }
 
-
-

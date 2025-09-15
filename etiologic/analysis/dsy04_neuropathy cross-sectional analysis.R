@@ -1,6 +1,6 @@
 rm(list=ls());gc();source(".Rprofile")
 
-mi_dfs <- readRDS("etiologic/analysis/dsy03_neuropathy mi_dfs.RDS") 
+mi_dfs <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/dsy03_neuropathy mi_dfs.RDS")) 
 
 # Loss to follow-up weights
 crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working/cleaned/etiologic/dsy01_cross sectional df.RDS")) %>% 
@@ -8,11 +8,42 @@ crosssec_df <- readRDS(paste0(path_diabetes_subphenotypes_youth_folder,"/working
   mutate(cs_available = case_when(is.na(combined_abnormal) ~ 0,
                                   TRUE ~ 1))
 
-cs_available_mod <- glm(cs_available ~ cluster + age_category + female + race_eth + study, 
-                     data = crosssec_df, 
-                     family = poisson(link = "log"))
-crosssec_df$ltfu_prob = predict(cs_available_mod,newdata=crosssec_df,type="response")
-crosssec_df$ltfu_weight = 1/crosssec_df$ltfu_prob
+# ---- 1) Sanity checks on variables used in the model ----
+vars <- c("cs_available","cluster","age_category","female","race_eth","study")
+stopifnot(all(vars %in% names(crosssec_df)))
+
+# Look at levels / missingness quickly
+str(crosssec_df[vars])
+sapply(crosssec_df[vars], \(x) sum(is.na(x)))
+
+# ---- 2) Clean types, drop NAs used by the model, drop empty levels ----
+df_mod <- crosssec_df %>% 
+  dplyr::mutate(
+    cs_available = as.integer(cs_available),   # 0/1
+    cluster      = as.factor(cluster),
+    age_category = as.factor(age_category),
+    female       = as.integer(female),         # 0/1
+    race_eth     = as.factor(race_eth),
+    study        = as.factor(study)
+  ) %>% 
+  dplyr::filter(if_all(all_of(vars), ~ !is.na(.))) %>% 
+  droplevels()
+
+# Outcome must vary
+table(df_mod$cs_available)
+stopifnot(dplyr::n_distinct(df_mod$cs_available) > 1)
+
+# ---- 3) Fit (binary outcome with log link via Poisson) ----
+cs_available_mod <- glm(
+  cs_available ~ cluster + age_category + female + race_eth + study,
+  data   = df_mod,
+  family = poisson(link = "log")
+)
+summary(cs_available_mod)
+
+
+df_mod$ltfu_prob = predict(cs_available_mod,newdata=df_mod,type="response")
+df_mod$ltfu_weight = 1/df_mod$ltfu_prob
 
 library(mice)
 library(geepack)
@@ -80,8 +111,8 @@ library(stringr)
     ### Combination
     mutate(combined_abnormal = case_when(survey_abnormal == 1 | exam_abnormal == 1 ~ 1,
                                          TRUE ~ 0)) %>% 
-    left_join(crosssec_df %>% 
-                dplyr::select(study,study_id,ltfu_prob,ltfu_weight),
+    left_join(df_mod %>% 
+                dplyr::select(study,study_id,ltfu_prob,ltfu_weight,bmi),
               by = c("study","study_id")) %>% 
     # convert to numberic
     mutate(study_id = case_when(study == "TODAY" ~ str_replace_all(study_id, "-", ""),
@@ -89,23 +120,39 @@ library(stringr)
     mutate(study_id = as.numeric(study_id))
     
 
+# --- Clean & validate ---
+vars <- c("survey_abnormal","cluster","age_category","female","race_eth","study_id","ltfu_weight")
+  
+df <- completed_data %>%
+  mutate(
+    survey_abnormal = as.integer(survey_abnormal),      # 0/1
+    cluster         = factor(cluster),
+    age_category    = factor(age_category),
+    female          = as.integer(female),               # 0/1
+    race_eth        = factor(race_eth),
+    study_id        = factor(study_id),
+    ltfu_weight     = as.numeric(ltfu_weight)
+  ) %>%
+  dplyr::filter(if_all(all_of(vars), ~ !is.na(.))) %>%
+  dplyr::filter(is.finite(ltfu_weight), ltfu_weight > 0) %>%
+  droplevels()
   
 # Adjusted -----------------------------------------------------------------------------------------------------
   
   survey_mod <- geeglm(survey_abnormal ~ cluster + age_category + female + race_eth, 
-                            data = completed_data, 
+                            data = df, 
                             family = poisson(link = "log"), 
                             id = study_id,
                             weights = ltfu_weight, 
                             corstr = "independence")
   exam_mod <- geeglm(exam_abnormal ~ cluster + age_category + female + race_eth, 
-                          data = completed_data, 
+                          data = df, 
                           family = poisson(link = "log"), 
                           id = study_id,
                           weights = ltfu_weight, 
                           corstr = "independence")
   combined_mod <- geeglm(combined_abnormal ~ cluster + age_category + female + race_eth, 
-                              data = completed_data, 
+                              data = df, 
                               family = poisson(link = "log"), 
                               id = study_id,
                               weights = ltfu_weight, 
@@ -117,6 +164,32 @@ survey_mod_out = broom::tidy(survey_mod)
 exam_mod_out = broom::tidy(exam_mod)  
 combined_mod_out = broom::tidy(combined_mod)  
 
+# Adjusted for BMI -----------------------------------------------------------------------------------------------------
+
+survey_bmod <- geeglm(survey_abnormal ~ cluster + age_category + female + race_eth + bmi, 
+                     data = df, 
+                     family = poisson(link = "log"), 
+                     id = study_id,
+                     weights = ltfu_weight, 
+                     corstr = "independence")
+exam_bmod <- geeglm(exam_abnormal ~ cluster + age_category + female + race_eth + bmi, 
+                   data = df, 
+                   family = poisson(link = "log"), 
+                   id = study_id,
+                   weights = ltfu_weight, 
+                   corstr = "independence")
+combined_bmod <- geeglm(combined_abnormal ~ cluster + age_category + female + race_eth + bmi, 
+                       data = df, 
+                       family = poisson(link = "log"), 
+                       id = study_id,
+                       weights = ltfu_weight, 
+                       corstr = "independence")
+
+
+
+survey_bmod_out = broom::tidy(survey_bmod)  
+exam_bmod_out = broom::tidy(exam_bmod)  
+combined_bmod_out = broom::tidy(combined_bmod)  
 
 # Unadjusted -----------------------------------------------------------------------------------------------------
 
@@ -152,6 +225,10 @@ bind_rows(
   survey_mod_out %>% mutate(outcome = "survey_abnormal"),
   exam_mod_out %>% mutate(outcome = "exam_abnormal"),
   combined_mod_out %>% mutate(outcome = "combined_abnormal"),
+  
+  survey_bmod_out %>% mutate(outcome = "survey_abnormal_bmi"),
+  exam_bmod_out %>% mutate(outcome = "exam_abnormal_bmi"),
+  combined_bmod_out %>% mutate(outcome = "combined_abnormal_bmi"),
   
   survey_unmod_out %>% mutate(outcome = "unadjusted survey_abnormal"),
   exam_unmod_out %>% mutate(outcome = "unadjusted exam_abnormal"),
